@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
+
+const login = r => require.ensure([], () => r(require('@/components/login')), 'login');   // 登录注册
+const team = r => require.ensure([], () => r(require('@/components/team')), 'team');   // 登录注册
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/team',
+      name: 'team',
+      component: team
     }
   ]
 })

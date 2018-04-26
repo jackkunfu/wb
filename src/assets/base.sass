@@ -1,0 +1,36 @@
+*
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+// 垂直水平居中
+@mixin center-center
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    min-width: 15rem;
+    max-width: 50rem;
+    text-align: center;
+
+// 太长省略号
+@mixin els
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+#tip
+    @include center-center;
+    z-index: 10;
+    transition: all 0.2s;
+    // background: rgba(0,0,0,0.5);
+
+#messageTip
+    @include center-center;
+    z-index: 11;
+    transition: all 0.2s;
+    img, i
+        display: block;
+        margin: 0 auto;
