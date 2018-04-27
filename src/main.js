@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import proto from './js/base'
+import filter from './js/filter'
 Vue.use(proto);
+Vue.use(filter);
 
 Vue.config.productionTip = false
 

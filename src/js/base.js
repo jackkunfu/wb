@@ -37,4 +37,17 @@ export default function(Vue){
         // setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
     }
 
+    Vue.prototype.timeAll = function(t){     // 时间格式：2018-04-27 20:49:29
+        var datetime = new Date(t);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1;
+        var date = datetime.getDate();
+        var hour = datetime.getHours();
+        var minutes = datetime.getMinutes();
+        var second = datetime.getSeconds();
+        if (date < 10) { date = '0' + date };
+        if (month < 10) { month = '0' + month };
+        return year + '-' + month + '-' + date + ' ' + hour + ':' + minutes + ':' + second;
+    }
+
 }
