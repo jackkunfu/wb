@@ -20,6 +20,13 @@ export default function(Vue){
             })
         })
     }
+    
+    Vue.prototype.goUrl = function(url, data){      // 提示  str  内容   type  控制展示对图片
+        this.$router.push({
+          path: url,
+          query: data || {}
+        })
+    }
 
     Vue.prototype.messageTip = function(str, type){      // 提示  str  内容   type  控制展示对图片
         // $('#tip').remove();
