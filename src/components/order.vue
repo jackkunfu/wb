@@ -5,13 +5,14 @@ div.order-page
 			span.left {{item.name}}
 			span.right {{item.time | timeAll}}
 		.order-msg
-			p.msg-top
-				span 手机号： {{item.mobile}}
-				span 金额：{{item.money}}
-			p
-				span 佣金： {{item.commision}}
-				span 支付状态： 
-					b(:class="{active: !item.payStatus}") {{item.payStatus | pay}}
+			p.order-mobile 手机号：
+				span  {{item.mobile}}
+			p  金额：
+				span {{item.money}}
+			p 佣金：
+				span {{item.commision}}
+			p 支付状态：
+				span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
     
 
 </template>
@@ -59,26 +60,36 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.msg-top
-	margin-bottom: 1rem;
-.active
-	color: #E03F46;
+.order-mobile
+	margin-bottom: 0.4rem;
+
+
 .order-page
 	background: #F8F8F8;
+	font-size: 0.3rem;
+	color: #888888;
+	span
+		font-size: 0.44rem;
+		color: #2B2B2B;
+		&.active
+			color: #E03F46;
+		&.right
+			font-size: 0.3rem;
+			color: #888888;
 	.order-list
-		background: #eee;
-		margin-bottom: 1rem;
+		background: #fff;
+		margin-bottom: 0.5rem;
 		div
-			padding: 0.8rem 1rem;
+			padding: 0.4rem 0.5rem;
 		.order-name
 			overflow: hidden;
 			border-bottom: 1px solid #F8F8F8;
 		.order-msg
-			span
+			p
 				display: inline-block;
 				width: 50%;
 				text-align: left;
-				b
+				span
 					font-weight: 500
 </style>
 
