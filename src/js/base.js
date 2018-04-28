@@ -32,8 +32,7 @@ export default function(Vue){
         // $('#tip').remove();
         $('#messageTip').remove();
         var img = type ? 'ok.png' : 'nok.png';
-        var html = 
-        $('body').append('<div id="messageTip"><img src="'+img+'" />'+str+'</div>');
+        $('body').append(`<div id="messageTip"><img src="${img}" />${str}</div>`);
         // setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
     }
 

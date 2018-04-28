@@ -3,8 +3,19 @@
     margin: 0;
     padding: 0;
 
+body
+    font-size: 0.45rem;
+
+input
+    border: none;    
+
 input:focus
     outline: none;
+
+$color: #FE4C0C;
+
+.theme-color
+    color: $color;
 
 // 垂直水平居中
 @mixin center-center
@@ -35,9 +46,12 @@ input:focus
     z-index: 11;
     transition: all 0.2s;
     font-size: 0.4rem;
+    color: #fff;
     img, i
         display: block;
-        margin: 0 auto;
+        margin: 0 auto 0.3rem;
+        width: 0.4rem;
+        height: 0.4rem;
 
 @mixin font-small
     font-size: 0.3rem; // 12px
@@ -51,3 +65,13 @@ input:focus
 
 .right
     float: right;
+
+.btn
+    height: 1.25rem;
+    line-height: 1.25rem;
+    background: $color;
+    font-size: 0.48rem;
+    text-align: center;
+    color: #fff;
+    border-radius: 4px;
+    margin: 1rem 0 0.5rem;
