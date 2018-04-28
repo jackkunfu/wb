@@ -76,7 +76,7 @@ export default {
 		font-size: 0.55rem;
 		border-bottom: 1px solid #F8F8F8;
 	.pay-money
-		margin-right: -0.33rem;
+		// margin-right: -0.33rem;
 		margin-bottom: 0.65rem;
 		.pay-card
 			width: 30%;
@@ -87,8 +87,10 @@ export default {
 			border-radius: 5px;
 			color: #FE4C0C;
 			margin-top: 0.5rem;
-			margin-right: 0.33rem;
+			margin-right: 0.48rem;
 			opacity: 0.5;
+			&:nth-child(4)
+				margin-right: 0;
 			&.active
 				background: #FE4C0C;
 				color: #fff;

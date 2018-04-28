@@ -4,11 +4,11 @@
         .login(v-if="isLogin")
             .box
                 .label 用户名
-                input(v-model="userName")
+                input(v-model="userName" placeholder="请输入用户名")
 
             .box
                 .label 密码
-                input(v-model="password")
+                input(v-model="password" type="password" placeholder="请输入密码")
 
         .signIn(v-else="")
 
