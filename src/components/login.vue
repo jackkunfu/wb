@@ -91,6 +91,7 @@
                     var data = res.data;
                     localStorage.tb_tk = data.token;
                     localStorage.tb_userInfo = JSON.stringify(data.tbUser);
+                    this.goUrl('/vipCenter', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
                 }
             },
             async zhuceFun(){
