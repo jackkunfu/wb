@@ -11,7 +11,6 @@ const setUp = r => require.ensure([], () => r(require('@/components/setUp')), 's
 const aboutUs = r => require.ensure([], () => r(require('@/components/aboutUs')), 'aboutUs');   // 关于我们
 const myTeam = r => require.ensure([], () => r(require('@/components/myTeam')), 'myTeam');   // 我的团队
 
-
 export default new Router({
   routes: [{
       path: '/',
