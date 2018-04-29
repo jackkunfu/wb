@@ -3,7 +3,7 @@ div.vip-center
 	.vip-msg
 		.vip-name
 			img
-			span 张三
+			span {{userMsg.nikeName}}
 		.total-money
 			.money-num 222
 				span 元
@@ -23,32 +23,6 @@ div.vip-center
 			.nav-name 
 				img(:src='item.url')
 				span {{item.name}}
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/erweima@3x.png')
-		//- 		span 我的二维码
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/hd@3x.png')
-		//- 		span 话费活动专区
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/order@3x.png')
-		//- 		span 充值订单
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/order_02@3x.png')
-		//- 		span 下级充值订单
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/record@3x.png')
-		//- 		span 体现订单
-		//- .nav-list 
-		//- 	.nav-name 
-		//- 		img(src='../img/set@3x.png')
-		//- 		span 设置
-
-    
 
 </template>
 
@@ -58,21 +32,36 @@ export default {
 	name: 'HelloWorld',
     data () {
         return {
-           navList: [
+			userMsg: '',
+			token: '',
+           	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/order',params:''},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/order',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
 			   {url: require('../img/record@3x.png'),name:'体现金额',query: '/order',params:''},
-			   {url: require('../img/set@3x.png'),name:'设置',query: '/order',params:''},
-		   ]
+			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:''},
+		   	]
         }
     },
     mounted(){
-        this.messageTip('123', true)
+		this.getMsg();
+		this.messageTip('123', true);
+		console.log(this.$route.query);
+		this.userMsg = JSON.parse(this.$route.query.tb_userInfo);
+		this.token = this.$route.query.tb_tk;
+		console.log('this.token')
 	},
 	methods: {
+		// 获取页面信息
+		async getMsg(){
+			var res = await this.ajax('/api/vip/home/'+this.token,{},'get');
+			if(res && res.status){
+
+			}
+			
+		},
 		goOther(src,data){
 			this.$router.push({path: src, query:{id:data}})
 		}

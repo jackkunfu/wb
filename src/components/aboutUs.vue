@@ -1,6 +1,6 @@
 <template lang="pug">
 div.about-us
-	div  {{article}}
+	div(v-html="")  {{article}}
 
     
 

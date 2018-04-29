@@ -87,7 +87,7 @@
                 if(login.pwd == '') return this.messageTip('密码不能为空~');
 
                 var res = await this.ajax('/api/user/login', this.login);
-                if(res && res.code == 200){
+                if(res && res.status == 200){
                     var data = res.data;
                     localStorage.tb_tk = data.token;
                     localStorage.tb_userInfo = JSON.stringify(data.tbUser);
