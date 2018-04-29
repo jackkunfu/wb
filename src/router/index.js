@@ -9,7 +9,9 @@ const order = r => require.ensure([], () => r(require('@/components/order')), 'o
 const phoneFare = r => require.ensure([], () => r(require('@/components/phoneFare')), 'phoneFare');   // 充值话费页面
 const vipCenter = r => require.ensure([], () => r(require('@/components/vipCenter')), 'vipCenter');   // 会员中心
 const setUp = r => require.ensure([], () => r(require('@/components/setUp')), 'setUp');   // 设置
-const aboutUs = r => require.ensure([], () => r(require('@/components/aboutUs')), 'aboutUs');   // 设置
+const aboutUs = r => require.ensure([], () => r(require('@/components/aboutUs')), 'aboutUs');   // 关于我们
+const myTeam = r => require.ensure([], () => r(require('@/components/myTeam')), 'myTeam');   // 我的团队
+
 
 export default new Router({
   routes: [{
@@ -40,5 +42,9 @@ export default new Router({
 		path: '/aboutUs',
 		name: 'aboutUs',
 		component: aboutUs
+	},{
+		path: '/myTeam',
+		name: 'myTeam',
+		component: myTeam
 	}]
 })

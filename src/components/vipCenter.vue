@@ -37,7 +37,7 @@ export default {
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/order',params:''},
-			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/order',params:''},
+			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
 			   {url: require('../img/record@3x.png'),name:'体现金额',query: '/order',params:''},
