@@ -54,9 +54,9 @@ export default function(Vue){
     Vue.prototype.messageTip = function(str, type){      // 提示  str  内容   type  控制展示对图片
         $('#tip').remove();
         $('#messageTip').remove();
-        var img = type ? 'ok.png' : 'nok.png';
+        var img = type ? require('../img/ok.png') : require('../img/nok.png');
         $('body').append(`<div id="messageTip"><img src="${img}" />${str}</div>`);
-        setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
+        // setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
     }
 
     Vue.prototype.timeAll = function(t){     // 时间格式：2018-04-27 20:49:29

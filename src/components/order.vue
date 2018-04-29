@@ -72,7 +72,6 @@ export default {
         }
     },
     mounted(){
-		this.messageTip('123', true);
 		this.orderId = this.$route.query.id;
     }
 }

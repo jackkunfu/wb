@@ -21,7 +21,6 @@ export default {
         }
     },
     mounted(){
-		this.messageTip('123', true);
 	},
 	methods: {
 		goOther(src){

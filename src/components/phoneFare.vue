@@ -39,7 +39,6 @@ export default {
         }
     },
     mounted(){
-        this.messageTip('123', true)
     },
 	methods: {
 		// 选择支付金额

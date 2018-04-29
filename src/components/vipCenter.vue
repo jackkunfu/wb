@@ -5,18 +5,18 @@ div.vip-center
 			img
 			span {{userMsg.nikeName}}
 		.total-money
-			.money-num 222
+			.money-num {{account.meney}}
 				span 元
 			span 收益统计(佣金)
 		.vip-num
 			div
-				p 89:00
+				p {{account.countMeney}}
 				p 账户余额(元)
 			div
-				p 1222
+				p {{account.vipNo}}
 				p 会员编号
 			div
-				p 10000
+				p {{account.openPeoPlo}}
 				p 推广人数(人)
 	.vip-nav
 		.nav-list(v-for="(item,i) in navList" @click="goOther(item.query,item.params)")
@@ -31,9 +31,10 @@ div.vip-center
 export default {
 	name: 'HelloWorld',
     data () {
+		var token = this.$route.query.tb_tk;
         return {
 			userMsg: '',
-			token: '',
+			token,
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/order',params:''},
@@ -42,23 +43,27 @@ export default {
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
 			   {url: require('../img/record@3x.png'),name:'体现金额',query: '/order',params:''},
 			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:''},
-		   	]
+			],
+			account: {
+				countMeney: '',
+				meney: '',
+				nikeName: '',
+				openPeoPlo: '',
+				vipNo: ''
+			}   
         }
     },
     mounted(){
-		this.getMsg();
-		this.messageTip('123', true);
-		console.log(this.$route.query);
+		console.log(this.$route.query)
 		this.userMsg = JSON.parse(this.$route.query.tb_userInfo);
-		this.token = this.$route.query.tb_tk;
-		console.log('this.token')
+		this.getMsg();
 	},
 	methods: {
 		// 获取页面信息
 		async getMsg(){
 			var res = await this.ajax('/api/vip/home/'+this.token,{},'get');
-			if(res && res.status){
-
+			if(res && res.status == 200){
+				this.account = res.data;
 			}
 			
 		},
