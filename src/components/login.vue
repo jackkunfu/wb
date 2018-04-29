@@ -26,7 +26,7 @@
                 img(:src="codeImage" @click="getCode")
             .box
                 .label 设置密码
-                input(v-model="zhuce.password" placeholder="请输入密码")
+                input(v-model="zhuce.password" type="password" placeholder="请输入密码")
             //- .box
                 .label 确认密码
                 input(v-model="zhuce.password1" placeholder="请再次输入密码")
@@ -38,7 +38,7 @@
                 input(v-model="zhuce.email" placeholder="请输入邮箱")
             .box
                 .label 推荐人ID
-                input(v-model="zhuce.refereeId" placeholder="请输入推荐人ID")
+                input(v-model="zhuce.refereeId" type="number" placeholder="请输入推荐人ID（数字）")
 
             .btn(@click="zhuceFun") 注册
 
