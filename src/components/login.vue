@@ -3,8 +3,8 @@
     .enroll
         .login(v-if="!isFogt && !isZhuce")
             .box
-                .label 用户名
-                input(v-model="login.phone" placeholder="请输入用户名")
+                .label 手机号
+                input(v-model="login.phone" placeholder="请输入手机号")
 
             .box
                 .label 密码
@@ -18,24 +18,29 @@
         .sign-in(v-if="isZhuce")
             .box
                 .label 手机号
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
-            .box
+                input(v-model="zhuce.phone" placeholder="请输入手机号")
+            .box.short
                 .label 验证码
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
+                input(v-model="zhuce.code" placeholder="请输入验证码")
+            .box.code-box
+                img(:src="codeImage" @click="getCode")
             .box
                 .label 设置密码
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
-            .box
+                input(v-model="zhuce.password" type="password" placeholder="请输入密码")
+            //- .box
                 .label 确认密码
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
+                input(v-model="zhuce.password1" placeholder="请再次输入密码")
             .box
                 .label 昵称
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
+                input(v-model="zhuce.nikeName" placeholder="请输入昵称")
+            .box
+                .label 邮箱
+                input(v-model="zhuce.email" placeholder="请输入邮箱")
             .box
                 .label 推荐人ID
-                input(v-model="zhuce.userName" placeholder="请输入用户名")
+                input(v-model="zhuce.refereeId" type="number" placeholder="请输入推荐人ID（数字）")
 
-            .btn 注册
+            .btn(@click="zhuceFun") 注册
 
             .left(@click="isFogt=true;isZhuce=false;") 找回密码
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
@@ -61,27 +66,54 @@
                 isZhuce: false,
                 isFogt: false,
                 login: {
-                    phone: '',
-                    pwd: '',
+                    phone: '', pwd: ''
+                },
+                zhuce: {
+                    phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
                 },
                 fogt: {
 
                 },
-                zhuce: {
-
-                }  
+                codeImage: '/api/defaultKaptcha?t=' + new Date().getTime()
             }
         },
-        mounted(){
-            this.messageTip('123', true)
-        },
+        mounted(){},
         methods: {
             async loginFun(){
+                var login = this.login;
+                login.phone = login.phone.trim();
+                login.pwd = login.pwd.trim();
+                if(login.phone == '') return this.messageTip('手机号不能为空~');
+                if(login.pwd == '') return this.messageTip('密码不能为空~');
+
                 var res = await this.ajax('/api/user/login', this.login);
                 if(res && res.code == 200){
                     var data = res.data;
-                    console.log(res.data)
+                    localStorage.tb_tk = data.token;
+                    localStorage.tb_userInfo = JSON.stringify(data.tbUser);
+                    this.goUrl('/vipCenter', { tb_tk: data.token, tb_userInfo: JSON.stringify(data.tbUser) });
                 }
+            },
+            async zhuceFun(){
+                var zhuce = this.zhuce;
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(zhuce.phone.trim())) ) return this.messageTip('手机号格式有误~');
+                if( zhuce.code.trim() == '' ) return this.messageTip('验证码不能为空~');
+                if( zhuce.password.trim() == '') return this.messageTip('密码不能为空~');
+                if( zhuce.password.trim().length < 6 ) return this.messageTip('密码须6位及以上~');
+                // if(zhuce.password.trim() != zhuce.password1.trim()) return this.messageTip('两次输入密码不一致~');
+                if( /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(zhuce.email) == false ) return this.messageTip('邮箱格式不正确~');
+                var opt = Object.assign({}, this.zhuce)
+                delete opt.password1;
+                // if(opt.refereeId.trim() == '') opt.refereeId = -1;
+                var res = await this.ajax('/api/user/register', opt);
+                if(res && res.code == 200) this.isZhuce = this.isFogt = false;
+            },
+            async fogtFun(){
+                var res = await this.ajax('/api/user/findPwd', this.fogt);
+            },
+            async getCode(){
+                var t = new Date().getTime();
+                this.codeImage =  '/api/defaultKaptcha?t='+t;
             }
         }
     }
@@ -95,6 +127,7 @@
 
     .box
         width: 100%;
+        display: inline-block;
         height: 1.28rem;
         border-radius: 4px;
         border: 1px solid #ccc;
@@ -102,6 +135,20 @@
         color: #888;
         margin-bottom: 0.4rem;
         font-size: 0.4rem;
+
+        &.short
+            width: 7rem;
+            input
+                width: 3rem;
+        
+        &.code-box
+            width: 3rem;
+            float: right;
+            padding: 0;
+            img
+                width: 100%;
+                height: 100%;
+                border-radius: 4px;
         
         .label
             width: 2.5rem;
@@ -110,6 +157,7 @@
 
         input
             height: 0.88rem;
+            
 
     .sign
 

@@ -1,4 +1,4 @@
-var baseUrl = '';
+// export const apiServer = 'http://198.44.243.39:8088';
 export default function(Vue){
     Vue.prototype._ajax = function(url, data, type){
         // $('#messageTip').remove();
@@ -7,10 +7,13 @@ export default function(Vue){
         }
         return new Promise(function(rs, rj){
             $.ajax({
-                url: url.substring(0, 5) === '/api/' ? baseUrl + url : url,
+                url: url,
                 type: type || 'post',
                 dataType: 'json',
-                data: data
+                data: data,
+                xhrFields: {
+                    withCredentials: true
+                }
             }).done(function(data){
                 $('#tip').remove()
                 rs(data);
@@ -26,11 +29,15 @@ export default function(Vue){
         try {
             var res = await this._ajax(...arguments);
             if(res && res.status != 200){
-                this.messageTip(res.msg || '请求出错，请稍后重试~')
+                if(res.status == 201) this.goUrl('/')
+                else this.messageTip(res.msg || '请求出错，请稍后重试~')
             }
             return res;
         }catch(e){
+            $('#tip').remove()
+            this.messageTip('请求出错，请稍后重试~')
             console.log(arguments[0] + '请求出错');
+            console.log(e);
         }
     }
     
