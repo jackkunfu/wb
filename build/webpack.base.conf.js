@@ -69,9 +69,10 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      // 请求到 '/govPlatform' 下 的请求都会被代理到 target： http://10.10.0.244:8088/govPlatform 中
+      // 请求到 '/api/' 下 的请求都会被代理到 target： http://198.44.243.39:8088 中
       '/api/*': {
-          target: 'http://10.10.0.244:8088',
+          target: 'http://198.44.243.39:8088',
+          pathRewrite: { '^/api': '' },
           secure: false, // 接受 运行在 https 上的服务
           changeOrigin: true
       }
