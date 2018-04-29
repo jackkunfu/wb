@@ -29,7 +29,8 @@ export default function(Vue){
         try {
             var res = await this._ajax(...arguments);
             if(res && res.status != 200){
-                this.messageTip(res.msg || '请求出错，请稍后重试~')
+                if(res.status == 201) this.goUrl('/')
+                else this.messageTip(res.msg || '请求出错，请稍后重试~')
             }
             return res;
         }catch(e){
