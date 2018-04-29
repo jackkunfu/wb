@@ -1,18 +1,34 @@
 <template lang="pug">
 div.order-page
-	.order-list(v-for="(item,i) in orderList")
-		.order-name
-			span.left {{item.name}}
-			span.right {{item.time | timeAll}}
-		.order-msg
-			p.order-mobile 手机号：
-				span  {{item.mobile}}
-			p  金额：
-				span {{item.money}}
-			p 佣金：
-				span {{item.commision}}
-			p 支付状态：
-				span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+
+	div(v-if="orderId")
+		.order-list(v-for="(item,i) in orderList")
+			.order-name
+				span.left {{item.name}}
+				span.right {{item.time | timeAll}}
+			.order-msg
+				p.order-mobile 手机号：
+					span  {{item.mobile}}
+				p  金额：
+					span {{item.money}}
+				p 佣金：
+					span {{item.commision}}
+				p 支付状态：
+					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+
+	div(v-if="!orderId")
+		.order-list(v-for="(item,i) in orderList")
+			.order-name
+				span.left {{item.name}}
+				span.right {{item.time | timeAll}}
+			.order-msg
+				p.order-mobile 手机号：
+					span  {{item.mobile}}
+				p  金额：
+					span {{item.money}}
+				p 支付状态：
+					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+				p
     
 
 </template>
@@ -23,6 +39,7 @@ export default {
 	name: 'HelloWorld',
     data () {
         return {
+			orderId: true, // true: 我的订单  false: 下级充值订单
             orderList: [
                 {
                     name:'张三',
@@ -55,15 +72,14 @@ export default {
         }
     },
     mounted(){
-        this.messageTip('123', true)
+		this.messageTip('123', true);
+		this.orderId = this.$route.query.id;
     }
 }
 </script>
 <style lang="sass" scoped>
 .order-mobile
 	margin-bottom: 0.4rem;
-
-
 .order-page
 	background: #F8F8F8;
 	font-size: 0.3rem;

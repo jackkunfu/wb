@@ -1,0 +1,47 @@
+<template lang="pug">
+div.set-up
+	div(v-for="(item,i) in setList" @click="goOther(item.src)")
+		span.left {{item.name}}
+		img(:src="item.url").right
+
+    
+
+</template>
+
+<script>
+
+export default {
+	name: 'HelloWorld',
+    data () {
+        return {
+			setList: [
+				{url: require('../img/more@3x.png'),name:'修改密码',src:'/order'},
+				{url: require('../img/more@3x.png'),name:'关于我们',src:'/aboutUs'},
+			]
+        }
+    },
+    mounted(){
+		this.messageTip('123', true);
+	},
+	methods: {
+		goOther(src){
+			this.$router.push({path: src})
+		}
+	}
+}
+</script>
+<style lang="sass" scoped>
+.set-up
+	font-size: 0.4rem;
+	div
+		height: 1.3rem;
+		line-height: 1.3rem;
+		padding: 0 0.5rem;
+		background: #eee;
+		margin-bottom: 0.1rem;
+		img
+			width: 0.2rem;
+			position: relative;
+			top: 0.5rem;
+</style>
+

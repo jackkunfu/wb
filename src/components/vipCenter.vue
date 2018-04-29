@@ -19,34 +19,34 @@ div.vip-center
 				p 10000
 				p 推广人数(人)
 	.vip-nav
-		.nav-list 
+		.nav-list(v-for="(item,i) in navList" @click="goOther(item.query,item.params)")
 			.nav-name 
-				img(src='../img/team@3x.png')
-				span 我的团队
-		.nav-list 
-			.nav-name 
-				img(src='../img/erweima@3x.png')
-				span 我的二维码
-		.nav-list 
-			.nav-name 
-				img(src='../img/hd@3x.png')
-				span 话费活动专区
-		.nav-list 
-			.nav-name 
-				img(src='../img/order@3x.png')
-				span 充值订单
-		.nav-list 
-			.nav-name 
-				img(src='../img/order_02@3x.png')
-				span 下级充值订单
-		.nav-list 
-			.nav-name 
-				img(src='../img/record@3x.png')
-				span 体现订单
-		.nav-list 
-			.nav-name 
-				img(src='../img/set@3x.png')
-				span 设置
+				img(:src='item.url')
+				span {{item.name}}
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/erweima@3x.png')
+		//- 		span 我的二维码
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/hd@3x.png')
+		//- 		span 话费活动专区
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/order@3x.png')
+		//- 		span 充值订单
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/order_02@3x.png')
+		//- 		span 下级充值订单
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/record@3x.png')
+		//- 		span 体现订单
+		//- .nav-list 
+		//- 	.nav-name 
+		//- 		img(src='../img/set@3x.png')
+		//- 		span 设置
 
     
 
@@ -59,19 +59,24 @@ export default {
     data () {
         return {
            navList: [
-			   {url: '../img/team@3x.png',name:'我的团队',query: '/order'},
-			   {url: '../img/team@3x.png',name:'我的二维码',query: '/order'},
-			   {url: '../img/team@3x.png',name:'话费活动专区',query: '/order'},
-			   {url: '../img/team@3x.png',name:'充值订单',query: '/order'},
-			   {url: '../img/team@3x.png',name:'下级充值订单',query: '/order'},
-			   {url: '../img/team@3x.png',name:'体现金额',query: '/order'},
-			   {url: '../img/team@3x.png',name:'设置',query: '/order'},
+			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
+			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/order',params:''},
+			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/order',params:''},
+			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
+			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
+			   {url: require('../img/record@3x.png'),name:'体现金额',query: '/order',params:''},
+			   {url: require('../img/set@3x.png'),name:'设置',query: '/order',params:''},
 		   ]
         }
     },
     mounted(){
         this.messageTip('123', true)
-    }
+	},
+	methods: {
+		goOther(src,data){
+			this.$router.push({path: src, query:{id:data}})
+		}
+	},
 }
 </script>
 <style lang="sass" scoped>
