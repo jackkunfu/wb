@@ -59,13 +59,13 @@ export default {
     data () {
         return {
            navList: [
-			   {url: '../img/team@3x.png',name:'我的团队',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'我的二维码',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'话费活动专区',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'充值订单',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'下级充值订单',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'体现金额',query: '/myTeam'},
-			   {url: '../img/team@3x.png',name:'设置',query: '/myTeam'},
+			   {url: '../img/team@3x.png',name:'我的团队',query: '/order'},
+			   {url: '../img/team@3x.png',name:'我的二维码',query: '/order'},
+			   {url: '../img/team@3x.png',name:'话费活动专区',query: '/order'},
+			   {url: '../img/team@3x.png',name:'充值订单',query: '/order'},
+			   {url: '../img/team@3x.png',name:'下级充值订单',query: '/order'},
+			   {url: '../img/team@3x.png',name:'体现金额',query: '/order'},
+			   {url: '../img/team@3x.png',name:'设置',query: '/order'},
 		   ]
         }
     },
