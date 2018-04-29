@@ -1,6 +1,6 @@
 var baseUrl = '';
 export default function(Vue){
-    Vue.prototype.ajax = function(url, data, type){
+    Vue.prototype._ajax = function(url, data, type){
         // $('#messageTip').remove();
         if($('#tip').length < 1){
             $('body').append('<div id="tip">加载中...</div>');
@@ -12,16 +12,32 @@ export default function(Vue){
                 dataType: 'json',
                 data: data
             }).done(function(data){
+                $('#tip').remove()
                 rs(data);
             }).fail(e => {
-                console.log(e);
-            }).complete(()=>{
+                // console.log(e);
                 $('#tip').remove()
+                rj(e);
             })
         })
     }
+
+    Vue.prototype.ajax = async function(){
+        try {
+            var res = await this._ajax(...arguments);
+            if(res && res.status != 200){
+                this.messageTip(res.msg || '请求出错，请稍后重试~')
+            }
+            return res;
+        }catch(e){
+            console.log(arguments[0] + '请求出错');
+        }
+    }
     
     Vue.prototype.goUrl = function(url, data){      // 路由跳转
+        if(!url) return
+        $('#tip').remove();
+        $('#messageTip').remove();
         this.$router.push({
           path: url,
           query: data || {}
@@ -29,11 +45,11 @@ export default function(Vue){
     }
 
     Vue.prototype.messageTip = function(str, type){      // 提示  str  内容   type  控制展示对图片
-        // $('#tip').remove();
+        $('#tip').remove();
         $('#messageTip').remove();
         var img = type ? 'ok.png' : 'nok.png';
         $('body').append(`<div id="messageTip"><img src="${img}" />${str}</div>`);
-        // setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
+        setTimeout( ()=> { $('#messageTip').remove(); }, 2000)
     }
 
     Vue.prototype.timeAll = function(t){     // 时间格式：2018-04-27 20:49:29

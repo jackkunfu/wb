@@ -4,13 +4,13 @@
         .login(v-if="!isFogt && !isZhuce")
             .box
                 .label 用户名
-                input(v-model="login.userName" placeholder="请输入用户名")
+                input(v-model="login.phone" placeholder="请输入用户名")
 
             .box
                 .label 密码
-                input(v-model="login.password" type="password" placeholder="请输入密码")
+                input(v-model="login.pwd" type="password" placeholder="请输入密码")
 
-            .btn 登陆
+            .btn(@click="loginFun") 登陆
 
             .left(@click="isFogt=true;isZhuce=false;") 找回密码
             .right.theme-color(@click="isZhuce=true;isFogt=false;") 免费注册
@@ -61,19 +61,28 @@
                 isZhuce: false,
                 isFogt: false,
                 login: {
-                    userName: '',
-                    password: '',
+                    phone: '',
+                    pwd: '',
                 },
                 fogt: {
 
                 },
                 zhuce: {
 
-                }           
+                }  
             }
         },
         mounted(){
             this.messageTip('123', true)
+        },
+        methods: {
+            async loginFun(){
+                var res = await this.ajax('/api/user/login', this.login);
+                if(res && res.code == 200){
+                    var data = res.data;
+                    console.log(res.data)
+                }
+            }
         }
     }
 </script>
