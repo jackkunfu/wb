@@ -32,7 +32,7 @@ $(function(){
 })
     
 export default {
-    name: 'HelloWorld',
+    name: 'mTeam',
     data () {
         return {
             show: false,
@@ -88,7 +88,16 @@ export default {
             ]
         }
     },
+    mounted(){
+        this.list();
+    },
     methods: {
+        async list(){
+            var res = await this.ajax('/api/team/list', { userId: this.$route.query.userId });
+            if(res && res.code == 200){
+                if(res.data.length != 0) this.teamList = res.data;
+            }
+        }
         // chooceTeam(i){
         //     alert(i);
         //     console.log(this);

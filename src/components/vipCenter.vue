@@ -32,12 +32,14 @@ export default {
 	name: 'HelloWorld',
     data () {
 		var token = this.$route.query.tb_tk;
+		var userMsg = JSON.parse(this.$route.query.tb_userInfo);
+		var id = userMsg.id;
         return {
-			userMsg: '',
+			userMsg,
 			userId: '',
 			token,
            	navList: [
-			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:''},
+			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:{userId: id}},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
@@ -55,10 +57,6 @@ export default {
         }
     },
     mounted(){
-		console.log(this.$route.query)
-		this.userMsg = JSON.parse(this.$route.query.tb_userInfo);
-		this.userId= this.userMsg.id;
-		console.log(this.userId)
 		this.getMsg();
 	},
 	methods: {
@@ -68,11 +66,12 @@ export default {
 			if(res && res.status == 200){
 				this.account = res.data;
 			}
-			
 		},
-		goOther(src,data){
-			if(data==='') data = this.userId;
-			this.$router.push({path: src, query:{id:data}});
+		goOther(src, data){
+			this.goUrl(src, data);
+
+			// if(data==='') data = this.userId;
+			// this.$router.push({path: src, query:{id:data}});
 		}
 	},
 }
