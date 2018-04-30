@@ -23,7 +23,8 @@
                 .label 验证码
                 input(v-model="zhuce.code" placeholder="请输入验证码")
             .box.code-box
-                img(:src="codeImage" @click="getCode")
+                img(:src="codeImage")
+                img.get-code(src="../img/change@3x.png" @click="getCode")
             .box
                 .label 设置密码
                 input(v-model="zhuce.password" type="password" placeholder="请输入密码")
@@ -42,18 +43,30 @@
 
             .btn(@click="zhuceFun") 注册
 
-            .left(@click="isFogt=true;isZhuce=false;") 找回密码
+            .left(@click="isFogt=true;isZhuce=false;getCode()") 找回密码
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
 
 
         .foft(v-if="isFogt")
             .box
                 .label 用户名
-                input(v-model="login.userName" placeholder="请输入用户名")
+                input(v-model="fogt.phone" placeholder="请输入手机号")
+            .box.short
+                .label 验证码
+                input(v-model="fogt.code" placeholder="请输入验证码")
+            .box.code-box
+                img(:src="codeImage" @click="getCode")
+                img.get-code(src="../img/change@3x.png" @click="getCode")
+            .box
+                .label 设置密码
+                input(v-model="fogt.password" type="password" placeholder="请输入密码")
+            .box
+                .label 确认密码
+                input(v-model="fogt.password1" type="password" placeholder="请再次输入密码")
 
-            .btn 重置密码
+            .btn(@click="fogtFun") 重置密码
 
-            .left(@click="isZhuce=true;isFogt=false;") 免费注册
+            .left(@click="isZhuce=true;isFogt=false;getCode()") 免费注册
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
 
 </template>
@@ -72,7 +85,7 @@
                     phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
                 },
                 fogt: {
-
+                    phone: '', password: '', password1: '',code: '',
                 },
                 codeImage: '/api/defaultKaptcha?t=' + new Date().getTime()
             }
@@ -109,7 +122,14 @@
                 if(res && res.code == 200) this.isZhuce = this.isFogt = false;
             },
             async fogtFun(){
-                var res = await this.ajax('/api/user/findPwd', this.fogt);
+                var fogt = this.fogt;
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(fogt.phone.trim())) ) return this.messageTip('手机号格式有误~');
+                if( fogt.code.trim() == '' ) return this.messageTip('验证码不能为空~');
+                if( fogt.password.trim() == '') return this.messageTip('密码不能为空~');
+                if( fogt.password.trim().length < 6 ) return this.messageTip('密码须6位及以上~');
+                if(fogt.password.trim() != fogt.password1.trim()) return this.messageTip('两次输入密码不一致~');
+                var res = await this.ajax('/api/user/findPwd', {code: this.fogt.code,phone: this.fogt.phobe});
+
             },
             async getCode(){
                 var t = new Date().getTime();
@@ -135,9 +155,9 @@
         color: #888;
         margin-bottom: 0.4rem;
         font-size: 0.4rem;
-
+ 
         &.short
-            width: 7rem;
+            width: 6rem;
             input
                 width: 3rem;
         
@@ -145,11 +165,17 @@
             width: 3rem;
             float: right;
             padding: 0;
+            margin-right: 1rem;
             img
                 width: 100%;
                 height: 100%;
                 border-radius: 4px;
-        
+            .get-code
+                width: 0.6rem;
+                position: relative;
+                height: 0.5rem;
+                left: 3.3rem;
+                top: -0.9rem;
         .label
             width: 2.5rem;
             line-height: 0.88rem;

@@ -34,14 +34,15 @@ export default {
 		var token = this.$route.query.tb_tk;
         return {
 			userMsg: '',
+			userId: '',
 			token,
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
-			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/order',params:''},
+			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
-			   {url: require('../img/record@3x.png'),name:'体现金额',query: '/order',params:''},
+			   {url: require('../img/record@3x.png'),name:'提现金额',query: '/order',params:''},
 			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:''},
 			],
 			account: {
@@ -56,6 +57,7 @@ export default {
     mounted(){
 		console.log(this.$route.query)
 		this.userMsg = JSON.parse(this.$route.query.tb_userInfo);
+		this.userId= JSON.parse(this.$route.query.tb_userInfo.id);
 		this.getMsg();
 	},
 	methods: {
@@ -68,7 +70,8 @@ export default {
 			
 		},
 		goOther(src,data){
-			this.$router.push({path: src, query:{id:data}})
+			if(data==='') this.$router.push({path: src});
+			else this.$router.push({path: src, query:{id:data}});
 		}
 	},
 }

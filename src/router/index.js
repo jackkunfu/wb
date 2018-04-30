@@ -10,6 +10,7 @@ const vipCenter = r => require.ensure([], () => r(require('@/components/vipCente
 const setUp = r => require.ensure([], () => r(require('@/components/setUp')), 'setUp');   // 设置
 const aboutUs = r => require.ensure([], () => r(require('@/components/aboutUs')), 'aboutUs');   // 关于我们
 const myTeam = r => require.ensure([], () => r(require('@/components/myTeam')), 'myTeam');   // 我的团队
+const myCode = r => require.ensure([], () => r(require('@/components/myCode')), 'myCode');   // 我的二维码
 
 export default new Router({
   routes: [{
@@ -40,5 +41,9 @@ export default new Router({
 		path: '/myTeam',
 		name: 'myTeam',
 		component: myTeam
+	},{
+		path: '/myCode',
+		name: 'myCode',
+		component: myCode
 	}]
 })
