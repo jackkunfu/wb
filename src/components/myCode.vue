@@ -10,12 +10,22 @@ export default {
 	name: 'HelloWorld',
     data () {
         return {
-			
+			usetId: '',
+			imgSrc: ''
         }
     },
     mounted(){
-		this.orderId = this.$route.query.id;
-    }
+		this.usetId = this.$route.query.id;
+		this.getCode();
+	},
+	methods: {
+		async getCode(){
+			var res = await this.ajax('/api/team/qrcode/'+this.usetId,{},'get');
+			if(res && res.status==200){
+				this.imgSrc = res.model;
+			}
+		}
+	}
 }
 </script>
 <style lang="sass" scoped>

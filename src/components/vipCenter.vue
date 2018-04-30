@@ -57,7 +57,8 @@ export default {
     mounted(){
 		console.log(this.$route.query)
 		this.userMsg = JSON.parse(this.$route.query.tb_userInfo);
-		this.userId= JSON.parse(this.$route.query.tb_userInfo.id);
+		this.userId= this.userMsg.id;
+		console.log(this.userId)
 		this.getMsg();
 	},
 	methods: {
@@ -70,8 +71,8 @@ export default {
 			
 		},
 		goOther(src,data){
-			if(data==='') this.$router.push({path: src});
-			else this.$router.push({path: src, query:{id:data}});
+			if(data==='') data = this.userId;
+			this.$router.push({path: src, query:{id:data}});
 		}
 	},
 }
