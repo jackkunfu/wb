@@ -5,12 +5,12 @@ div.my-team
             span.name1(value="wer") {{item1.name}}
             span.grade1 {{item1.grade}}
             span.right {{item1.mobile}}
-        .team-1(v-for="(item2,i2) in item1.children" v-show="false")
+        .team-1(v-for="(item2,i2) in item1.children")
             p.msg-1
                 span.name1 {{item2.name}}
                 span.grade1 {{item2.grade}}
                 span.right {{item2.mobile}}
-            .team-1(v-for="(item3,i3) in item2.children" v-show="false")
+            .team-1(v-for="(item3,i3) in item2.children")
                 p.msg-1
                     span.name1(value='21') {{item3.name}}
                     span.grade1 {{item3.grade}}
@@ -20,18 +20,17 @@ div.my-team
 
 <script>
 $(function(){
-    $('.team-1').click(function(){
+    $('.team-1').click(function(e){
         $(this).children('.msg-1').children('.name1').toggleClass('active');
         var a = $(this).children('.msg-1').children('.name1').hasClass('active');
         console.log($(this).children('.team-1').html());
         console.log($(this).children('.team-1').html());
-        if(a){$(this).children('.team-1').show()};
-        if(!a){$(this).children('.team-1').hide()};
+        if(a) $(this).children('.team-1').show()
+        if(!a) $(this).children('.team-1').hide();
+        e.stopPropagation();
     })
 })
     
-
-
 export default {
     name: 'HelloWorld',
     data () {
@@ -98,6 +97,13 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.team-1
+    &.active
+        >.team-1
+            display: block;
+    >.team-1
+        display: none;
+
 .my-team
     text-align: left;
     font-size: 0.4rem;

@@ -37,7 +37,7 @@ export default {
 			userId: '',
 			token,
            	navList: [
-			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/order',params:''},
+			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
