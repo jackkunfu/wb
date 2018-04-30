@@ -1,16 +1,16 @@
 <template lang="pug">
 div.my-team
-    .team-1(v-for="(item1,i) in teamList" @click="chooceTeam")
+    .team-1(v-for="(item1,i) in teamList")
         p.msg-1
-            span.name1(:class="{active:show}") {{item1.name}}
+            span.name1(value="wer") {{item1.name}}
             span.grade1 {{item1.grade}}
             span.right {{item1.mobile}}
-        .team-1(v-for="(item2,i2) in item1.children" )
+        .team-1(v-for="(item2,i2) in item1.children" v-show="false")
             p.msg-1
                 span.name1 {{item2.name}}
                 span.grade1 {{item2.grade}}
                 span.right {{item2.mobile}}
-            .team-1(v-for="(item3,i3) in item2.children")
+            .team-1(v-for="(item3,i3) in item2.children" v-show="false")
                 p.msg-1
                     span.name1(value='21') {{item3.name}}
                     span.grade1 {{item3.grade}}
@@ -19,6 +19,18 @@ div.my-team
 </template>
 
 <script>
+$(function(){
+    $('.team-1').click(function(){
+        $(this).children('.msg-1').children('.name1').toggleClass('active');
+        var a = $(this).children('.msg-1').children('.name1').hasClass('active');
+        console.log($(this).children('.team-1').html());
+        console.log($(this).children('.team-1').html());
+        if(a){$(this).children('.team-1').show()};
+        if(!a){$(this).children('.team-1').hide()};
+    })
+})
+    
+
 
 export default {
     name: 'HelloWorld',
@@ -78,10 +90,10 @@ export default {
         }
     },
     methods: {
-        chooceTeam(){
-            this.show = this.show ? false : true;
-            alert(this.show)
-        }
+        // chooceTeam(i){
+        //     alert(i);
+        //     console.log(this);
+        // }
     },
 }
 </script>
