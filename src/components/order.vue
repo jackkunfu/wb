@@ -73,6 +73,7 @@ export default {
     },
     mounted(){
 		this.orderId = this.$route.query.id;
+		console.log(this.orderId);
     }
 }
 </script>

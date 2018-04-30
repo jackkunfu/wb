@@ -23,8 +23,6 @@ $(function(){
     $('.team-1').click(function(e){
         $(this).children('.msg-1').children('.name1').toggleClass('active');
         var a = $(this).children('.msg-1').children('.name1').hasClass('active');
-        console.log($(this).children('.team-1').html());
-        console.log($(this).children('.team-1').html());
         if(a) $(this).children('.team-1').show()
         if(!a) $(this).children('.team-1').hide();
         e.stopPropagation();
@@ -118,7 +116,7 @@ export default {
     font-size: 0.4rem;
     .team-1
         .msg-1
-            padding: 0.3rem 0.5rem;
+            padding: 0.5rem 0.5rem;
             border-bottom: 1px solid #eee;
             .name1
                 padding: 0 0.3rem 0 0.6rem;

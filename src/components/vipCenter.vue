@@ -68,7 +68,8 @@ export default {
 			}
 		},
 		goOther(src, data){
-			this.goUrl(src, data);
+			if(data==='') data = this.userId;
+			this.goUrl(src, {id:data});
 
 			// if(data==='') data = this.userId;
 			// this.$router.push({path: src, query:{id:data}});
@@ -100,7 +101,7 @@ export default {
 					padding-left: 0.1rem;
 		.vip-num
 			position: relative;
-			top: 1.3rem;
+			top: 1rem;
 			div
 				width: 30%;
 				display: inline-block;
