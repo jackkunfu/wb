@@ -39,7 +39,7 @@ export default {
 			userId: '',
 			token,
            	navList: [
-			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:{userId: id}},
+			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
@@ -58,6 +58,8 @@ export default {
     },
     mounted(){
 		this.getMsg();
+		this.userId = JSON.parse(this.$route.query.tb_userInfo).id
+		console.log(this.userId)
 	},
 	methods: {
 		// 获取页面信息
@@ -69,7 +71,7 @@ export default {
 		},
 		goOther(src, data){
 			if(data==='') data = this.userId;
-			this.goUrl(src, {id:data});
+			this.goUrl(src, {data});
 
 			// if(data==='') data = this.userId;
 			// this.$router.push({path: src, query:{id:data}});
@@ -101,7 +103,7 @@ export default {
 					padding-left: 0.1rem;
 		.vip-num
 			position: relative;
-			top: 1rem;
+			top: 0.8rem;
 			div
 				width: 30%;
 				display: inline-block;

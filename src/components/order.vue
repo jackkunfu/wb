@@ -1,7 +1,7 @@
 <template lang="pug">
 div.order-page
 
-	div(v-if="orderId")
+	div(v-if="!orderId")
 		.order-list(v-for="(item,i) in orderList")
 			.order-name
 				span.left {{item.name}}
@@ -16,7 +16,7 @@ div.order-page
 				p 支付状态：
 					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
 
-	div(v-if="!orderId")
+	div(v-if="orderId")
 		.order-list(v-for="(item,i) in orderList")
 			.order-name
 				span.left {{item.name}}
@@ -72,8 +72,8 @@ export default {
         }
     },
     mounted(){
-		this.orderId = this.$route.query.id;
-		console.log(this.orderId);
+		this.orderId = this.$route.query.data;
+		console.log(this.$route.query);
     }
 }
 </script>
