@@ -1,29 +1,29 @@
 <template lang="pug">
 div 
-	img()
+	img(:src="imgSrc")
     
-
 </template>
 
 <script>
 export default {
-	name: 'HelloWorld',
+	name: 'myCode',
     data () {
+		var usetId = this.$route.query.id;
         return {
-			usetId: '',
-			imgSrc: ''
+			usetId,
+			imgSrc: '/api/team/qrcode/'+this.usetId
         }
     },
     mounted(){
-		this.usetId = this.$route.query.id;
-		this.getCode();
+		// this.getCode();
 	},
 	methods: {
 		async getCode(){
-			var res = await this.ajax('/api/team/qrcode/'+this.usetId,{},'get');
-			if(res && res.status==200){
-				this.imgSrc = res.model;
-			}
+			this.imgSrc = '/api/team/qrcode/'+this.usetId;
+			// var res = await this.ajax('/api/team/qrcode/'+this.usetId,{},'get');
+			// if(res && res.status==200){
+			// 	this.imgSrc = res.model;
+			// }
 		}
 	}
 }
