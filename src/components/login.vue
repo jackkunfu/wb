@@ -76,7 +76,7 @@
         name: 'Login',
         data () {
             var query = this.$route.query;
-            var isZhuce = isFogt = false, fogtUid = '';
+            var isZhuce = false, isFogt = false, fogtUid = '';
             if(query.type=="isZhuce") isZhuce = true;
             else if(query.type=="isFogt"){
                 isFogt = true;
