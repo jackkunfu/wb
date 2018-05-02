@@ -101,6 +101,7 @@ export default {
             var res = await this.ajax('/api/team/list', { userId: id });
             this.teamList.forEach(v=>{
                 if(v.userId==id) v.children = res.data;
+                
                 console.log(this.teamList);
             });
             if(lay==1){

@@ -7,19 +7,21 @@ div
 <script>
 export default {
 	name: 'myCode',
-    data () {
-		var usetId = this.$route.query.id;
+    data() {
+		var userId = this.$route.query.data;
         return {
-			usetId,
-			imgSrc: '/api/team/qrcode/'+this.usetId
+			userId,
+			imgSrc: '/api/team/qrcode?userId='+ this.$route.query.data
         }
     },
     mounted(){
 		// this.getCode();
+		console.log('this.$route.query.data');
+		console.log(this.$route.query.data);
 	},
 	methods: {
 		async getCode(){
-			this.imgSrc = '/api/team/qrcode/'+this.usetId;
+			this.imgSrc = '/api/team/qrcode?userId='+ this.$route.query.data;
 			// var res = await this.ajax('/api/team/qrcode/'+this.usetId,{},'get');
 			// if(res && res.status==200){
 			// 	this.imgSrc = res.model;
