@@ -28,13 +28,15 @@ div.phone-fare
 export default {
 	name: 'HelloWorld',
     data () {
+		var query = this.$route.query;
         return {
-			mobile: this.$route.query.data,
+			token: query.token,
+			mobile: query.data,
             payList: [
 				{total: 30, price: 29.99, id: 11},
 				{total: 30, price: 29.99, id: 12},
 				{total: 30, price: 29.99, id: 13},
-				{total: 30, price: 29.99, id: 14},
+				{total: 30, price: 29.99, id: 14}
 			],
 			payType: 0,
 			payId: '',
@@ -64,18 +66,21 @@ export default {
 			$('.pay-money').children('.pay-card').eq(v).addClass('active');
 		},
 		// 去支付
-		goPay(){
-			if(this.payType===0) {
-				alert('请选择支付方式');
-				return
-			};
-			if(this.payId=='') {
-				alert('请选择充值金额');
-				return
-			};
-			alert(this.payType);
-			alert(this.payId);
-			alert(this.mobile)
+		async goPay(){
+			if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.mobile.trim())) ) return this.messageTip('手机号格式有误~');
+			if(this.payType===0) return this.messageTip('请选择支付方式~');
+			if(this.payId=='') return this.messageTip('请选择充值金额~');
+			// {
+			// 	alert('请选择充值金额');
+			// 	return
+			// };
+			// alert(this.payType);
+			// alert(this.payId);
+			// alert(this.mobile)
+			var res = await this.ajax('/api/order/createOrder/'+this.token, {
+				itemId: this.payId,
+				phone: this.mobile.trim()
+			})
 		}
 	},
 }
@@ -85,7 +90,7 @@ export default {
 	width: 100%;
 	text-align: left;
 	background: #F8F8F8;
-	.pay-mobile,.pay-money,.pay-type,
+	.pay-mobile, .pay-money, .pay-type
 		padding: 0.5rem 0.5rem;
 		background: #fff;
 	.pay-mobile
@@ -154,14 +159,6 @@ export default {
 			color: #FDCFBE;
 			border: none;
 			
-
-			
-
-
-				
-				
-			
-
 	.pay-title
 		font-size: 0.3rem;
 		color: #888888;
