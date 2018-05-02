@@ -1,6 +1,6 @@
 <template lang="pug">
 div.set-up
-	div(v-for="(item,i) in setList" @click="goOther(item.src)")
+	div(v-for="(item,i) in setList" @click="goOther(item.src,item.type)")
 		span.left {{item.name}}
 		img(:src="item.url").right
 
@@ -15,16 +15,17 @@ export default {
     data () {
         return {
 			setList: [
-				{url: require('../img/more@3x.png'),name:'修改密码',src:'/logon'},
-				{url: require('../img/more@3x.png'),name:'关于我们',src:'/aboutUs'},
+				{url: require('../img/more@3x.png'),name:'修改密码',src:'/',type:'isFogt'},
+				{url: require('../img/more@3x.png'),name:'关于我们',src:'/aboutUs',type:''},
 			]
         }
     },
     mounted(){
 	},
 	methods: {
-		goOther(src){
-			this.$router.push({path: src})
+		goOther(src,type){
+			this.goUrl(src, {type});
+			// this.$router.push({path: src})
 		}
 	}
 }

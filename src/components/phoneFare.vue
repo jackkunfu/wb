@@ -1,10 +1,11 @@
 <template lang="pug">
 div.phone-fare
-	.pay-mobile {{mobile}}
+	.pay-mobile
+		input(type="number" v-model="mobile") 
 	.pay-money
 		.pay-title 请选择充值面额
 		.pay-card(@click="payCard(i,item.id)" v-for="(item, i) in payList")
-				.money-title {{item.total}}元
+				.money-title {{item.title}}
 				p 售价:{{item.price}}元
 		
 	.pay-type
@@ -37,6 +38,7 @@ export default {
 			],
 			payType: 0,
 			payId: '',
+			payImg: '', // 微信支付的二维码
         }
     },
     mounted(){
@@ -46,8 +48,13 @@ export default {
 	methods: {
 		// 获取话费列表
 		async getList(){
-			var res = await this.ajax('/item/list',{},'get');
-			if(res && res.status==200) this.payList = res.data;
+			var res = await this.ajax('/api/item/list',{},'get');
+			if(res && res.status==200){
+				this.payList = res.data;
+				console.log(this.payList)
+				this.payImg = this.payList[0].image;
+				console.log(this.payImg)
+			} 
 
 		},
 		// 选择支付金额
@@ -68,6 +75,7 @@ export default {
 			};
 			alert(this.payType);
 			alert(this.payId);
+			alert(this.mobile)
 		}
 	},
 }
@@ -81,8 +89,9 @@ export default {
 		padding: 0.5rem 0.5rem;
 		background: #fff;
 	.pay-mobile
-		font-size: 0.55rem;
 		border-bottom: 1px solid #F8F8F8;
+		input
+			font-size: 0.55rem;
 	.pay-money
 		// margin-right: -0.33rem;
 		margin-bottom: 0.65rem;
@@ -143,6 +152,7 @@ export default {
 			border: none;
 			margin-top: 2rem;
 			color: #FDCFBE;
+			border: none;
 			
 
 			
