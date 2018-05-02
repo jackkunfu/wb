@@ -1,7 +1,7 @@
 <template lang="pug">
 div.phone-fare
 	.pay-mobile
-		input(type="number" v-model="mobile") 
+		input(type="number" v-model="mobile")
 	.pay-money
 		.pay-title 请选择充值面额
 		.pay-card(@click="payCard(i,item.id)" v-for="(item, i) in payList")
@@ -17,9 +17,6 @@ div.phone-fare
 			span.pay-qb 钱包支付
 			span.right(:class="{active: payType==2}")
 		button(@click="goPay") 立即充值
-		
-		
-    
 
 </template>
 
