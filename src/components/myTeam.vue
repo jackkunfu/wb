@@ -19,7 +19,7 @@ div.my-team
 </template>
 
 <script>
-
+ import Vue from 'vue' 
 // $(function(){
     
 //     $('.team-1').click(function(e){
@@ -99,11 +99,15 @@ export default {
         async getData(id,lay,i){
             alert(134)
             var res = await this.ajax('/api/team/list', { userId: id });
-            this.teamList.forEach(v=>{
-                if(v.userId==id) v.children = res.data;
+            if(res && res.status == 200) Vue.set(this.teamList[i], 'children', res.data);
+            console.log(this.teamList);
+            
+            
+            // this.teamList.forEach(v=>{
+            //     if(v.userId==id) v.children = res.data;
                 
-                console.log(this.teamList);
-            });
+            //     console.log(this.teamList);
+            // });
             if(lay==1){
                 alert(22)
                 $('.my-team').children('.team-1').eq(i).children('.msg-1').children('.name1').toggleClass('active');
