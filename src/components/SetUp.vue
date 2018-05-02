@@ -15,7 +15,7 @@ export default {
     data () {
         return {
 			setList: [
-				{url: require('../img/more@3x.png'),name:'修改密码',src:'/order'},
+				{url: require('../img/more@3x.png'),name:'修改密码',src:'/logon'},
 				{url: require('../img/more@3x.png'),name:'关于我们',src:'/aboutUs'},
 			]
         }

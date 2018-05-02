@@ -1,6 +1,6 @@
 <template lang="pug">
 div.phone-fare
-	.pay-mobile 1330000001
+	.pay-mobile {{mobile}}
 	.pay-money
 		.pay-title 请选择充值面额
 		.pay-card(@click="payCard(i,item.id)" v-for="(item, i) in payList")
@@ -28,6 +28,7 @@ export default {
 	name: 'HelloWorld',
     data () {
         return {
+			mobile: this.$route.query.data,
             payList: [
 				{total: 30, price: 29.99, id: 11},
 				{total: 30, price: 29.99, id: 12},
@@ -39,8 +40,16 @@ export default {
         }
     },
     mounted(){
+		console.log(this.$route.query.data);
+		this.getList();
     },
 	methods: {
+		// 获取话费列表
+		async getList(){
+			var res = await this.ajax('/item/list',{},'get');
+			if(res && res.status==200) this.payList = res.data;
+
+		},
 		// 选择支付金额
 		payCard(v,id){
 			this.payId = id;

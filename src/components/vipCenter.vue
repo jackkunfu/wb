@@ -33,7 +33,9 @@ export default {
     data () {
 		var token = this.$route.query.tb_tk;
 		var userMsg = JSON.parse(this.$route.query.tb_userInfo);
+		console.log(userMsg)
 		var id = userMsg.id;
+		var mobile = userMsg.phone;
         return {
 			userMsg,
 			userId: '',
@@ -41,7 +43,7 @@ export default {
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
-			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:''},
+			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:mobile},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
 			   {url: require('../img/record@3x.png'),name:'提现金额',query: '/order',params:''},
