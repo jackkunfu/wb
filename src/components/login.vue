@@ -48,15 +48,15 @@
 
 
         .foft(v-if="isFogt")
-            .box
+            //- .box
                 .label 用户名
                 input(v-model="fogt.phone" placeholder="请输入手机号")
             .box.short
-                .label 验证码
+                .label 新密码
                 input(v-model="fogt.code" placeholder="请输入验证码")
             .box.code-box
-                img(:src="codeImage" @click="getCode")
-                img.get-code(src="../img/change@3x.png" @click="getCode")
+                //- img(:src="codeImage" @click="getCode")
+                //- img.get-code(src="../img/change@3x.png" @click="getCode")
             //- .box
                 .label 设置密码
                 input(v-model="fogt.password" type="password" placeholder="请输入密码")
@@ -75,9 +75,17 @@
     export default {
         name: 'Login',
         data () {
+            var query = this.$route.query;
+            var isZhuce = isFogt = false, fogtUid = '';
+            if(query.type=="isZhuce") isZhuce = true;
+            else if(query.type=="isFogt"){
+                isFogt = true;
+                fogtUid = query.userId;
+            }
             return {
-                isZhuce: false,
-                isFogt: false,
+                isZhuce,
+                isFogt,
+                fogtUid,
                 login: {
                     phone: '', pwd: ''
                 },
@@ -122,13 +130,17 @@
                 if(res && res.code == 200) this.isZhuce = this.isFogt = false;
             },
             async fogtFun(){
-                var fogt = this.fogt;
-                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(fogt.phone.trim())) ) return this.messageTip('手机号格式有误~');
-                if( fogt.code.trim() == '' ) return this.messageTip('验证码不能为空~');
-                if( fogt.password.trim() == '') return this.messageTip('密码不能为空~');
-                // if( fogt.password.trim().length < 6 ) return this.messageTip('密码须6位及以上~');
-                // if(fogt.password.trim() != fogt.password1.trim()) return this.messageTip('两次输入密码不一致~');
-                var res = await this.ajax('/api/user/findPwd', {code: this.fogt.code,phone: this.fogt.phobe});
+                var code = this.fogt.code.trim();
+                if( code == '' ) return this.messageTip('密码不能为空~');
+                if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
+                var res = await this.ajax('/api/user/findPwd', { code, phone: this.fogtUid });
+                
+                if(res && res.code == 200){
+                    this.messageTip(res.msg || '操作成功~', true);
+                    this.isFogt = false;
+                }else{
+                    this.messageTip(res.msg || '请求失败，请稍后重试~');
+                }
 
             },
             async getCode(){
