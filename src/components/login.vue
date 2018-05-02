@@ -48,13 +48,13 @@
 
 
         .foft(v-if="isFogt")
-            //- .box
-                .label 用户名
+            .box
+                .label 手机号
                 input(v-model="fogt.phone" placeholder="请输入手机号")
-            .box.short
+            .box
                 .label 新密码
                 input(v-model="fogt.code" placeholder="请输入验证码")
-            .box.code-box
+            //- .box.code-box
                 //- img(:src="codeImage" @click="getCode")
                 //- img.get-code(src="../img/change@3x.png" @click="getCode")
             //- .box
@@ -81,6 +81,7 @@
             else if(query.type=="isFogt"){
                 isFogt = true;
                 fogtUid = query.userId;
+                this.fogt.phone = fogtUid;
             }
             return {
                 isZhuce,
@@ -131,6 +132,8 @@
             },
             async fogtFun(){
                 var code = this.fogt.code.trim();
+                var phone = this.fogt.phone.trim();
+                if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(phone)) ) return this.messageTip('手机号格式有误~');
                 if( code == '' ) return this.messageTip('密码不能为空~');
                 if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
                 var res = await this.ajax('/api/user/findPwd', { code, phone: this.fogtUid });

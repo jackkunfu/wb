@@ -20,7 +20,7 @@ div.vip-center
 				p 推广人数(人)
 	.vip-nav
 		.nav-list(v-for="(item,i) in navList" @click="goOther(item.query,item.params)")
-			.nav-name 
+			.nav-name
 				img(:src='item.url')
 				span {{item.name}}
 
@@ -43,9 +43,9 @@ export default {
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:''},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:''},
-			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:mobile},
-			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:true},
-			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:false},
+			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:{ data: mobile }},
+			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:{ token: token, type: 1 }},
+			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:{ token: token, type: 0 }},
 			   {url: require('../img/record@3x.png'),name:'提现金额',query: '/order',params:''},
 			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:''},
 			],
@@ -73,7 +73,7 @@ export default {
 		},
 		goOther(src, data){
 			if(data==='') data = this.userId;
-			this.goUrl(src, {data});
+			this.goUrl(src, data);
 
 			// if(data==='') data = this.userId;
 			// this.$router.push({path: src, query:{id:data}});

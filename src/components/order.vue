@@ -24,22 +24,23 @@ div.order-page
 			.order-msg
 				p.order-mobile 手机号：
 					span  {{item.mobile}}
-				p  金额：
+				p 金额：
 					span {{item.money}}
 				p 支付状态：
 					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
-				p
-    
 
 </template>
 
 <script>
 
 export default {
-	name: 'HelloWorld',
+	name: 'order',
     data () {
+		var token = this.$route.query.token;
+		var type = this.$route.query.type;
         return {
-			orderId: true, // true: 我的订单  false: 下级充值订单
+			token,
+			orderId: true,      // true: 我的订单  false: 下级充值订单
             orderList: [
                 {
                     name:'张三',
@@ -48,7 +49,6 @@ export default {
 					money: 100,
 					commision: 10,
 					payStatus: true
-
 				},
 				{
                     name:'李四',
@@ -57,7 +57,6 @@ export default {
 					money: 100,
 					commision: 10,
 					payStatus: false
-
 				},
 				{
                     name:'张三',
@@ -66,15 +65,24 @@ export default {
 					money: 100,
 					commision: 10,
 					payStatus: true
-
-                },
+                }
             ]
         }
     },
     mounted(){
-		this.orderId = this.$route.query.data;
 		console.log(this.$route.query);
-    }
+		this.list();
+	},
+	methods: {
+		async list(){
+			var url = type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级
+			var type = type ? 'post' : 'get';
+			var res = await this.ajax(url + this.token, {}, type);
+			if(res && res.status == 200){
+				this.orderList = res.data;
+			}
+		}
+	}
 }
 </script>
 <style lang="sass" scoped>
