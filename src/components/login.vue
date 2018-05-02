@@ -127,7 +127,7 @@
                 delete opt.password1;
                 // if(opt.refereeId.trim() == '') opt.refereeId = -1;
                 var res = await this.ajax('/api/user/register', opt);
-                if(res && res.code == 200) this.isZhuce = this.isFogt = false;
+                if(res && res.status == 200) this.isZhuce = this.isFogt = false;
             },
             async fogtFun(){
                 var code = this.fogt.code.trim();
