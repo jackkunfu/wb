@@ -1,6 +1,6 @@
 <template lang="pug">
 div.my-team
-    .team-1(v-for="(item1,i) in teamList" @click="getData(item1.userId,1,i)")
+    .team-1(v-for="(item1,i) in teamList" @click="getData(item1.userId, 1, i, $event)")
         p.msg-1
             span.name1(value="item1.userId") {{item1.nikeName}}
             span.grade1 二级
@@ -19,20 +19,21 @@ div.my-team
 </template>
 
 <script>
- import Vue from 'vue' 
-// $(function(){
+$(function(){
     
-//     $('.team-1').click(function(e){
-//         alert(111)
-//         $(this).children('.msg-1').children('.name1').toggleClass('active');
-//         var a = $(this).children('.msg-1').children('.name1').hasClass('active');
-//         if(a) {
-//             $(this).children('.team-1').show()
-//         }
-//         if(!a) $(this).children('.team-1').hide();
-//         e.stopPropagation();
-//     })
-// })
+    // $('.team-1').click(function(e){
+    // $(document).on('click', '.team-1', function(e){
+    //     // alert(111)
+    //     $(this).children('.msg-1').children('.name1').toggleClass('active');
+    //     var a = $(this).children('.msg-1').children('.name1').hasClass('active');
+    //     if(a) {
+    //         $(this).children('.team-1').show()
+    //     }
+    //     if(!a) $(this).children('.team-1').hide();
+    //     e.stopPropagation();
+    // })
+    
+})
     
 export default {
     name: 'mTeam',
@@ -96,11 +97,30 @@ export default {
         console.log(this.$route.query.data)
     },
     methods: {
-        async getData(id,lay,i){
-            alert(134)
+        async getData(id,lay,i, e){
+            
+            // if($(e.target).parents('.team-1').find('>.msg-1 .name'))
+            // console.log(e)
+            // alert(134)
             var res = await this.ajax('/api/team/list', { userId: id });
-            if(res && res.status == 200) Vue.set(this.teamList[i], 'children', res.data);
+            if(res && res.status == 200){
+                res.data.length > 0 &&  this.$set(this.teamList[i], 'children', res.data);
+            }
             console.log(this.teamList);
+            // alert(1)
+            this.$nextTick(()=>{
+                var isWillClose = $(e.target).parents('.team-1').find('>.msg-1 .name').hasClass('active');
+                // alert(isWillClose)
+                var ctn = $(e.target).parent().hasClass('team-1') ? $(e.target).parent() : $(e.target).parent().parent();
+                ctn.find('>.msg-1 .name1').toggleClass('active');
+                if(isWillClose){
+                    ctn.find('>.team-1').hide();
+                }else{
+                    ctn.find('>.team-1').show();
+                }
+                e.stopPropagation();
+            })
+            
             
             
             // this.teamList.forEach(v=>{
@@ -108,16 +128,16 @@ export default {
                 
             //     console.log(this.teamList);
             // });
-            if(lay==1){
-                alert(22)
-                $('.my-team').children('.team-1').eq(i).children('.msg-1').children('.name1').toggleClass('active');
-                var a = $('.my-team').children('.team-1').eq(i).children('.msg-1').children('.name1').hasClass('active');
-                alert(a)
-                if(a) {
-                    $('.my-team').children('.team-1').eq(i).children('team-1').show()
-                }
-                if(!a) $('.my-team').children('.team-1').eq(i).children('team-1').hide();
-            }
+            // if(lay==1){
+            //     // alert(22)
+            //     $('.my-team').children('.team-1').eq(i).children('.msg-1').children('.name1').toggleClass('active');
+            //     var a = $('.my-team').children('.team-1').eq(i).children('.msg-1').children('.name1').hasClass('active');
+            //     // alert(a)
+            //     if(a) {
+            //         $('.my-team').children('.team-1').eq(i).children('team-1').show()
+            //     }
+            //     if(!a) $('.my-team').children('.team-1').eq(i).children('team-1').hide();
+            // }
             
 
         },
