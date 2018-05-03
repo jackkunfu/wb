@@ -23,6 +23,11 @@ div.vip-center
 			.nav-name
 				img(:src='item.url')
 				span {{item.name}}
+	.cash-box(v-if="isCash")
+		.del-img(@click="isCash=false")
+		.money-input
+			input(type="number" v-model="money")
+			button 提现
 
 </template>
 
@@ -40,14 +45,16 @@ export default {
 			userMsg,
 			userId: '',
 			token,
+			isCash: false,
+			money: '',
            	navList: [
 			   {url: require('../img/team@3x.png'),name:'我的团队',query: '/myTeam',params:{id:id,token:token}},
 			   {url: require('../img/erweima@3x.png'),name:'我的二维码',query: '/myCode',params:{id: id}},
 			   {url: require('../img/hd@3x.png'),name:'话费活动专区',query: '/phoneFare',params:{ data: mobile, token: token }},
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:{ token: token, type: 1 }},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:{ token: token, type: 0 }},
-			   {url: require('../img/record@3x.png'),name:'提现金额',query: '/order',params:''},
-			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:''},
+			   {url: require('../img/record@3x.png'),name:'提现金额',query: '',params:''},
+			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:{id: id}},
 			],
 			account: {
 				countMeney: '',
@@ -72,7 +79,7 @@ export default {
 			}
 		},
 		goOther(src, data){
-			if(data==='') data = this.userId;
+			if(src==='') this.isCash = true
 			this.goUrl(src, data);
 
 			// if(data==='') data = this.userId;
@@ -82,6 +89,26 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.cash-box
+	width: 100%;
+	height: 100%;
+	background: rgba(238,238,238,0.5);
+	position: absolute;
+	top: 0;
+	text-align: center;
+	.del-img
+		width: 1rem;
+		height: 1rem;
+		background: url(../img/delete@2x.png) no-repeat;
+		background-size: 0.7rem;
+		position: absolute;
+		right: 0
+		top: 0.3rem;
+	.money-input
+		width: 80%;
+		height: 40%;
+		background: #fff;
+		border-radius: 0.3rem;
 .vip-center
 	font-size: 0.44rem;
 	.vip-msg

@@ -1,10 +1,14 @@
 <template lang="pug">
 div.phone-fare
+	.pay-advert(v-if="isAdvert")
+		.advert-bg
+			i(@click="isAdvert=false")
+			.advert-title {{advertMsg.title}}
 	.pay-mobile
 		input(type="number" v-model="mobile")
 	.pay-money
 		.pay-title 请选择充值面额
-		.pay-card(@click="payCard(i,item.id)" v-for="(item, i) in payList")
+		.pay-card(@click="payCard(i,item.id,item.image)" v-for="(item, i) in payList")
 				.money-title {{item.title}}
 				p 售价:{{item.price}}元
 		
@@ -17,6 +21,10 @@ div.phone-fare
 			span.pay-qb 钱包支付
 			span.right(:class="{active: payType==2}")
 		button(@click="goPay") 立即充值
+	.pay-img(v-if="isImg")
+		i.del-img(@click="isImg=false")
+		img(:src="payImg")
+
 
 </template>
 
@@ -30,21 +38,39 @@ export default {
 			token: query.token,
 			mobile: query.data,
             payList: [
-				{total: 30, price: 29.99, id: 11},
-				{total: 30, price: 29.99, id: 12},
-				{total: 30, price: 29.99, id: 13},
-				{total: 30, price: 29.99, id: 14}
+				// {total: 30, price: 29.99, id: 11},
+				// {total: 30, price: 29.99, id: 12},
+				// {total: 30, price: 29.99, id: 13},
+				// {total: 30, price: 29.99, id: 14}
 			],
+			advertMsg: {
+				"id": 1,
+				"categoryId": 5,
+				"title": "我是支付广告",
+				"subTitle": null,
+				"url": "http://www.baidu.com",
+				"pic": "https://att2.citysbs.com/hangzhou/2018/05/03/09/middle_347x233-093015_v2_16161525311015444_55759dc397b56ae8c751d249ddec0320.gif",
+				"created": 1525015269000,
+				"updated": 1525015269000
+			},
 			payType: 0,
 			payId: '',
 			payImg: '', // 微信支付的二维码
+			isImg: false, // 微信支付二维码
+			isAdvert: true, // 广告
         }
     },
     mounted(){
-		console.log(this.$route.query.data);
+		console.log(this.$route.query);
 		this.getList();
+		this.getAdvert();
     },
 	methods: {
+		// 获取广告信息
+		async getAdvert(){
+			var res = await this.ajax('/api//ad/payad',{},'get');
+			if(res && res.status==200) this.advertMsg = res.data;
+		},
 		// 获取话费列表
 		async getList(){
 			var res = await this.ajax('/api/item/list',{},'get');
@@ -57,8 +83,9 @@ export default {
 
 		},
 		// 选择支付金额
-		payCard(v,id){
+		payCard(v,id,img){
 			this.payId = id;
+			this.payImg = img;
 			$('.pay-money').children('.pay-card').removeClass('active');
 			$('.pay-money').children('.pay-card').eq(v).addClass('active');
 		},
@@ -67,22 +94,74 @@ export default {
 			if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.mobile.trim())) ) return this.messageTip('手机号格式有误~');
 			if(this.payType===0) return this.messageTip('请选择支付方式~');
 			if(this.payId=='') return this.messageTip('请选择充值金额~');
-			// {
-			// 	alert('请选择充值金额');
-			// 	return
-			// };
-			// alert(this.payType);
-			// alert(this.payId);
-			// alert(this.mobile)
-			var res = await this.ajax('/api/order/createOrder/'+this.token, {
+			var resUrl = this.payType === 1 ? '/api/order/createOrder/' : '/api/order/pay/';
+			var res = await this.ajax(resUrl+this.token, {
 				itemId: this.payId,
 				phone: this.mobile.trim()
-			})
+			});
+			if(res && res.status==200) {
+				if(this.payType===1) this.isImg = true;
+				if(this.payType===2) this.messageTip('支付成功~')
+			};
+			
+			
 		}
 	},
 }
 </script>
 <style lang="sass" scoped>
+.pay-img,.cash-box
+	width: 100%;
+	height: 100%;
+	background: rgba(238,238,238,0.9);
+	position: absolute;
+	top: 0;
+	text-align: center;
+	.del-img
+		width: 1rem;
+		height: 1rem;
+		background: url(../img/delete@2x.png) no-repeat;
+		background-size: 0.7rem;
+		position: absolute;
+		right: 0
+		top: 0.3rem;
+	img
+		width: 80%;
+		height: 80%;
+		position: relative;
+		top: 10%;
+.pay-advert
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,0.5);
+	text-align: center;
+	position: absolute;
+	z-index: 100;
+	.advert-bg
+		width: 80%;
+		height: 100%;
+		background: url(../img/bg.png) no-repeat;
+		background-size: 100%;
+		margin: 0 auto;
+		position: relative;
+		padding-top: 0.8rem;
+		i
+			display: inline-block;
+			width: 1rem;
+			height: 1rem;
+			background: url(../img/delete@2x.png) no-repeat;
+			background-size: 0.5rem;
+			position: absolute;
+			right: 0
+			top: 0.3rem;
+		.advert-title
+			font-size: 0.7rem;
+			font-weight: 600;
+			color: #fff;
+			
+
+
+
 .phone-fare
 	width: 100%;
 	text-align: left;
