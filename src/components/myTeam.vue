@@ -40,6 +40,8 @@ export default {
     data () {
         return {
             show: false,
+            userId: this.$route.query.id,
+            token: this.$route.query.token,
             teamList: [
                 // {
                 //     name: '李四',
@@ -94,7 +96,7 @@ export default {
     },
     mounted(){
         this.list();
-        console.log(this.$route.query.data)
+        console.log(this.$route.query)
     },
     methods: {
         async getData(id,lay,i, e){
@@ -142,7 +144,7 @@ export default {
 
         },
         async list(){
-            var res = await this.ajax('/api/team/list', { userId: this.$route.query.data });
+            var res = await this.ajax('/api/team/list', { userId: this.$route.query.id });
             if(res && res.status == 200){
                 if(res.data.length != 0) this.teamList = res.data;
                 console.log('this.teamList')

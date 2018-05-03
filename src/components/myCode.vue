@@ -8,20 +8,19 @@ div
 export default {
 	name: 'myCode',
     data() {
-		var userId = this.$route.query.data;
+		var userId = this.$route.query.id;
         return {
 			userId,
-			imgSrc: '/api/team/qrcode?userId='+ this.$route.query.data
+			imgSrc: '/api/team/qrcode?userId='+ this.$route.query.id
         }
     },
     mounted(){
 		// this.getCode();
-		console.log('this.$route.query.data');
-		console.log(this.$route.query.data);
+		console.log(this.$route.query.id);
 	},
 	methods: {
 		async getCode(){
-			this.imgSrc = '/api/team/qrcode?userId='+ this.$route.query.data;
+			this.imgSrc = '/api/team/qrcode?userId='+ this.$route.query.id;
 			// var res = await this.ajax('/api/team/qrcode/'+this.usetId,{},'get');
 			// if(res && res.status==200){
 			// 	this.imgSrc = res.model;
