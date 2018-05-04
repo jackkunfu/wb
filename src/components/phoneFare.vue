@@ -4,6 +4,7 @@ div.phone-fare
 		.advert-bg
 			i(@click="isAdvert=false")
 			.advert-title {{advertMsg.title}}
+			.advert-content {{advertMsg.subTitle}}
 	.pay-mobile
 		input(type="number" v-model="mobile")
 	.pay-money
@@ -44,14 +45,6 @@ export default {
 				// {total: 30, price: 29.99, id: 14}
 			],
 			advertMsg: {
-				"id": 1,
-				"categoryId": 5,
-				"title": "我是支付广告",
-				"subTitle": null,
-				"url": "http://www.baidu.com",
-				"pic": "https://att2.citysbs.com/hangzhou/2018/05/03/09/middle_347x233-093015_v2_16161525311015444_55759dc397b56ae8c751d249ddec0320.gif",
-				"created": 1525015269000,
-				"updated": 1525015269000
 			},
 			payType: 0,
 			payId: '',
@@ -68,8 +61,9 @@ export default {
 	methods: {
 		// 获取广告信息
 		async getAdvert(){
-			var res = await this.ajax('/api//ad/payad',{},'get');
+			var res = await this.ajax('/api/ad/payad',{},'get');
 			if(res && res.status==200) this.advertMsg = res.data;
+			console.log(this.advertMsg)
 		},
 		// 获取话费列表
 		async getList(){
@@ -137,6 +131,7 @@ export default {
 	text-align: center;
 	position: absolute;
 	z-index: 100;
+
 	.advert-bg
 		width: 80%;
 		height: 100%;
@@ -145,6 +140,7 @@ export default {
 		margin: 0 auto;
 		position: relative;
 		padding-top: 0.8rem;
+		color: #fff
 		i
 			display: inline-block;
 			width: 1rem;
@@ -157,7 +153,12 @@ export default {
 		.advert-title
 			font-size: 0.7rem;
 			font-weight: 600;
-			color: #fff;
+		.advert-content
+			padding: 0 1rem;
+			font-size: 0.44rem;
+			line-height: 0.7rem;
+			margin-top: 4rem;
+			text-align: left;
 			
 
 

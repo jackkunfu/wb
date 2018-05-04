@@ -48,23 +48,27 @@
 
 
         .foft(v-if="isFogt")
-            .box
-                .label 手机号
-                input(v-model="fogt.phone" placeholder="请输入手机号")
-            .box
-                .label 新密码
-                input(v-model="fogt.code" placeholder="请输入验证码")
-            //- .box.code-box
-                //- img(:src="codeImage" @click="getCode")
-                //- img.get-code(src="../img/change@3x.png" @click="getCode")
-            //- .box
-                .label 设置密码
-                input(v-model="fogt.password" type="password" placeholder="请输入密码")
-            //- .box
-                .label 确认密码
-                input(v-model="fogt.password1" type="password" placeholder="请再次输入密码")
+            div(v-if="getEmail")
+                .box
+                    .label 手机号
+                    input(v-model="fogt.phone" placeholder="请输入手机号")
+                .box.short
+                    .label 验证码
+                    input(v-model="fogt.code" placeholder="请输入验证码")
+                .box.code-box
+                    img(:src="codeImage" @click="getCode")
+                    img.get-code(src="../img/change@3x.png" @click="getCode")
+                .btn(@click="fogtFun") 提交
 
-            .btn(@click="fogtFun") 提交
+            div(v-if="!getEmail")
+                .box
+                    .label 设置密码
+                    input(v-model="fogt.password" type="password" placeholder="请输入密码")
+                .box
+                    .label 确认密码
+                    input(v-model="fogt.password1" type="password" placeholder="请再次输入密码")
+
+                .btn(@click="changePws") 提交
 
             .left(@click="isZhuce=true;isFogt=false;getCode()") 免费注册
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
@@ -81,9 +85,9 @@
             else if(query.type=="isFogt"){
                 isFogt = true;
                 fogtUid = query.userId;
-                this.fogt.phone = fogtUid;
             }
             return {
+                getEmail: true,
                 isZhuce,
                 isFogt,
                 fogtUid,
@@ -94,12 +98,19 @@
                     phone: '', code: '', password: '', password1: '', nikeName: '', email: '', refereeId: ''
                 },
                 fogt: {
-                    phone: '', code: '',
+                    phone: '', code: '', password: '', password1: '',userId: ''
                 },
                 codeImage: '/api/defaultKaptcha?t=' + new Date().getTime()
             }
         },
-        mounted(){},
+        mounted(){
+            
+            console.log(this.$route.query)
+            if(this.$route.query.type=='isFogt') {
+                this.getEmail = false;
+                this.fogt.userId = this.$route.query.userId;
+            }
+        },
         methods: {
             async loginFun(){
                 var login = this.login;
@@ -134,17 +145,32 @@
                 var code = this.fogt.code.trim();
                 var phone = this.fogt.phone.trim();
                 if( !(/^1[3|4|5|7|8][0-9]\d{8}$/.test(phone)) ) return this.messageTip('手机号格式有误~');
-                if( code == '' ) return this.messageTip('密码不能为空~');
-                if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
-                var res = await this.ajax('/api/user/findPwd', { code, phone: this.fogtUid });
+                // if( code == '' ) return this.messageTip('密码不能为空~');
+                // if( code.length < 6 ) return this.messageTip('密码须6位及以上~');
+                var res = await this.ajax('/api/user/findPwd', { code, phone });
                 
-                if(res && res.code == 200){
-                    this.messageTip(res.msg || '操作成功~', true);
-                    this.isFogt = false;
+                if(res && res.status == 200){
+                    this.messageTip(res.msg || '请查收邮件~', true);
+                    // this.isFogt = false;
                 }else{
                     this.messageTip(res.msg || '请求失败，请稍后重试~');
                 }
 
+            },
+            async changePws(){
+                var userId = this.fogt.userId;
+                var pwd = this.fogt.password.trim();
+                var pwd2 = this.fogt.password1.trim();
+                if( pwd == '' ) return this.messageTip('密码不能为空~');
+                if( pwd.length < 6 ) return this.messageTip('密码须6位及以上~');
+                if(pwd!=pwd2) return this.messageTip('两次密码不一致~');
+                var res = await this.ajax('/api/user/changePwd/'+ userId,{userId,pwd,pwd2})
+                if(res&&res.status==200){
+                    this.messageTip(res.msg || '密码修改成功~', true);
+                    this.isFogt = false;
+                }else{
+                    this.messageTip(res.msg || '请求失败，请稍后重试~');
+                }
             },
             async getCode(){
                 var t = new Date().getTime();
@@ -177,11 +203,13 @@
                 width: 3rem;
         
         &.code-box
+            position: relative;
             width: 3rem;
             float: right;
             padding: 0;
             margin-right: 1rem;
             img
+                display: inline-block;
                 width: 100%;
                 height: 100%;
                 border-radius: 4px;
