@@ -32,12 +32,15 @@ export default {
 </script>
 <style lang="sass" scoped>
 .set-up
+	width: 100%;
+	height: 100%;
+	background: #f9f9f9;
 	font-size: 0.4rem;
 	div
 		height: 1.3rem;
 		line-height: 1.3rem;
 		padding: 0 0.5rem;
-		background: #eee;
+		background: #fff;
 		margin-bottom: 0.1rem;
 		img
 			width: 0.2rem;

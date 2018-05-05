@@ -1,6 +1,5 @@
 <template lang="pug">
 div.order-page
-
 	div(v-if="!orderId")
 		.order-list(v-for="(item,i) in orderList")
 			.order-name
@@ -80,6 +79,9 @@ export default {
 			var res = await this.ajax(url + this.token, {}, type);
 			if(res && res.status == 200){
 				this.orderList = res.data;
+				console.log(this.orderList);
+				console.log(this.orderList.length)
+				
 			}
 		}
 	}

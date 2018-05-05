@@ -12,7 +12,7 @@ div.phone-fare
 		.pay-card(@click="payCard(i,item.id,item.image)" v-for="(item, i) in payList")
 				.money-title {{item.title}}
 				p 售价:{{item.price}}元
-		
+	.pay-line 	
 	.pay-type
 		.pay-title 选择支付方式
 		p(@click="payType=1")
@@ -90,6 +90,7 @@ export default {
 			if(this.payId=='') return this.messageTip('请选择充值金额~');
 			var resUrl = this.payType === 1 ? '/api/order/createOrder/' : '/api/order/pay/';
 			var res = await this.ajax(resUrl+this.token, {
+				// token: this.token,
 				itemId: this.payId,
 				phone: this.mobile.trim()
 			});
@@ -104,6 +105,8 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.phone-fare
+	height: 100%;
 .pay-img,.cash-box
 	width: 100%;
 	height: 100%;
@@ -126,21 +129,31 @@ export default {
 		top: 10%;
 .pay-advert
 	width: 100%;
-	height: 100%;
-	background: rgba(255,255,255,0.5);
-	text-align: center;
-	position: absolute;
-	z-index: 100;
-
+	height: 100%
+	position: fixed;
+	vertical-align: middle;
+	z-index: 10;
+	
 	.advert-bg
 		width: 80%;
-		height: 100%;
+		// height: 100%;
 		background: url(../img/bg.png) no-repeat;
 		background-size: 100%;
 		margin: 0 auto;
-		position: relative;
 		padding-top: 0.8rem;
 		color: #fff
+		text-align: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		// top: 50%
+
+		
+
+
+		// margin: -8rem -4rem;
 		i
 			display: inline-block;
 			width: 1rem;
@@ -165,8 +178,9 @@ export default {
 
 .phone-fare
 	width: 100%;
+	height: 100%;
 	text-align: left;
-	background: #F8F8F8;
+	background: #fff;
 	.pay-mobile, .pay-money, .pay-type
 		padding: 0.5rem 0.5rem;
 		background: #fff;
@@ -174,6 +188,10 @@ export default {
 		border-bottom: 1px solid #F8F8F8;
 		input
 			font-size: 0.55rem;
+	.pay-line
+		width: 100%;
+		height: 0.5rem;
+		background: #f9f9f9;
 	.pay-money
 		// margin-right: -0.33rem;
 		margin-bottom: 0.65rem;

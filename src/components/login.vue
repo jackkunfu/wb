@@ -106,7 +106,7 @@
         mounted(){
             
             console.log(this.$route.query)
-            if(this.$route.query.type=='isFogt') {
+            if(this.$route.query.type=='isFogt' && this.$route.query.userId) {
                 this.getEmail = false;
                 this.fogt.userId = this.$route.query.userId;
             }

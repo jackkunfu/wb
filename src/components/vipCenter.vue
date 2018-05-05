@@ -26,8 +26,10 @@ div.vip-center
 	.cash-box(v-if="isCash")
 		.del-img(@click="isCash=false")
 		.money-input
-			input(type="number" v-model="money")
-			button 提现
+			.box
+				.label 提现金额
+				input.right(type="number" v-model="money" placeholder="输入提现金额~")
+			button(@click="getMoney") 提现
 
 </template>
 
@@ -81,10 +83,18 @@ export default {
 		goOther(src, data){
 			if(src==='') this.isCash = true
 			this.goUrl(src, data);
-
-			// if(data==='') data = this.userId;
-			// this.$router.push({path: src, query:{id:data}});
-		}
+		},
+		// 提现
+		async getMoney(){
+			var res = await this.ajax('/api/withdraw/'+this.token,{token:this.token,price: this.money*100});
+			if(res && res.status==200) {
+				this.messageTip('成功提现~', true);
+				this.getMsg();
+				this.isCash=false;
+			}else{
+				this.messageTip('请求失败，请稍后重试~');
+			}
+		},
 	},
 }
 </script>
@@ -109,8 +119,43 @@ export default {
 		height: 40%;
 		background: #fff;
 		border-radius: 0.3rem;
+		position: relative;
+		top: 20%;
+		left: 10%;
+		margin-top: 20%;
+		padding: 2rem 0;
+		.box
+			width: 80%;
+			height: 1.2rem;
+			line-height: 1.2rem;
+			border: 1px solid #ddd;
+			margin: auto;
+			font-size: 0.4rem;
+			text-align: left;
+			padding: 0 0.5rem;
+			border-radius: 0.2rem;
+			.label
+				display: inline-block;
+			input
+				width: 60%;
+				height: 1.1rem;
+				line-height: 1.1rem;
+				font-size: 0.4rem;
+		button
+			width: 80%;
+			padding: 0.3rem;
+			margin-top: 1rem;
+			background: #f97500;
+			border: none;
+			color: #fff;
+			border-radius: 4px;
+			opacity: 1
+
+
+
 .vip-center
 	font-size: 0.44rem;
+	height: 100%;
 	.vip-msg
 		width: 100%;
 		height: 6.4rem;
