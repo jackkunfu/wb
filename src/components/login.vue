@@ -139,7 +139,11 @@
                 delete opt.password1;
                 // if(opt.refereeId.trim() == '') opt.refereeId = -1;
                 var res = await this.ajax('/api/user/register', opt);
-                if(res && res.status == 200) this.isZhuce = this.isFogt = false;
+                if(res && res.status == 200){
+                    this.messageTip('注册成功，请登陆~', 1);
+                    this.isZhuce = false;
+                    this.isFogt = false;
+                }
             },
             async fogtFun(){
                 var code = this.fogt.code.trim();

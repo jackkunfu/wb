@@ -28,6 +28,8 @@ div.order-page
 				p 支付状态：
 					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
 
+	.none(v-if="orderList.length == 0") 暂无
+
 </template>
 
 <script>
@@ -41,30 +43,30 @@ export default {
 			token,
 			orderId: true,      // true: 我的订单  false: 下级充值订单
             orderList: [
-                {
-                    name:'张三',
-					mobile: '13333333333',
-					time: 1524831951993,
-					money: 100,
-					commision: 10,
-					payStatus: true
-				},
-				{
-                    name:'李四',
-					mobile: '13333333333',
-					time: 1524831951993,
-					money: 100,
-					commision: 10,
-					payStatus: false
-				},
-				{
-                    name:'张三',
-					mobile: '13333333333',
-					time: 1524831951993,
-					money: 100,
-					commision: 10,
-					payStatus: true
-                }
+                // {
+                //     name:'张三',
+				// 	mobile: '13333333333',
+				// 	time: 1524831951993,
+				// 	money: 100,
+				// 	commision: 10,
+				// 	payStatus: true
+				// },
+				// {
+                //     name:'李四',
+				// 	mobile: '13333333333',
+				// 	time: 1524831951993,
+				// 	money: 100,
+				// 	commision: 10,
+				// 	payStatus: false
+				// },
+				// {
+                //     name:'张三',
+				// 	mobile: '13333333333',
+				// 	time: 1524831951993,
+				// 	money: 100,
+				// 	commision: 10,
+				// 	payStatus: true
+                // }
             ]
         }
     },
