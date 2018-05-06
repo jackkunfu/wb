@@ -1,7 +1,7 @@
 <template lang="pug">
 
     .enroll
-        .login(v-if="!isFogt && !isZhuce")
+        .login(v-show="!isFogt && !isZhuce")
             .box
                 .label 手机号
                 input(v-model="login.phone" placeholder="请输入手机号")
@@ -15,7 +15,7 @@
             .left(@click="isFogt=true;isZhuce=false;") 找回密码
             .right.theme-color(@click="isZhuce=true;isFogt=false;") 免费注册
 
-        .sign-in(v-if="isZhuce")
+        .sign-in(v-show="isZhuce")
             .box
                 .label 手机号
                 input(v-model="zhuce.phone" placeholder="请输入手机号")
@@ -39,7 +39,7 @@
                 input(v-model="zhuce.email" placeholder="请输入邮箱")
             .box
                 .label 推荐人ID
-                input(v-model="zhuce.refereeId" type="number" placeholder="请输入推荐人ID（数字）")
+                input(v-model="zhuce.refereeId" type="number" placeholder="请输入推荐人ID（数字）" ref="rfid")
 
             .btn(@click="zhuceFun") 注册
 
@@ -47,7 +47,7 @@
             .right.theme-color(@click="isZhuce=isFogt=false;") 已有账号登陆
 
 
-        .foft(v-if="isFogt")
+        .foft(v-show="isFogt")
             div(v-if="getEmail")
                 .box
                     .label 手机号
@@ -104,11 +104,19 @@
             }
         },
         mounted(){
-            
             console.log(this.$route.query)
-            if(this.$route.query.type=='isFogt' && this.$route.query.userId) {
+            var query = this.$route.query
+            if(query.type && query.type =='isFogt' && query.userId) {
                 this.getEmail = false;
-                this.fogt.userId = this.$route.query.userId;
+                this.fogt.userId = query.userId;
+            }
+            if(query.type && query.type =='isZhuce'){
+                this.zhuce.refereeId = query.userId || '';
+                this.$nextTick(()=>{
+                    if(this.zhuce.refereeId != ''){
+                        this.$refs.rfid.disabled = true;
+                    }
+                })
             }
         },
         methods: {

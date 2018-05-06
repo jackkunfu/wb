@@ -5,12 +5,12 @@ div.vip-center
 			img
 			span {{userMsg.nikeName}}
 		.total-money
-			.money-num {{account.meney}}
+			.money-num {{account.countMeney}}
 				span 元
 			span 收益统计(佣金)
 		.vip-num
 			div
-				p {{account.countMeney}}
+				p {{account.meney}}
 				p 账户余额(元)
 			div
 				p {{account.vipNo}}

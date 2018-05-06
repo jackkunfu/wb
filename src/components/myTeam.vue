@@ -1,6 +1,6 @@
 <template lang="pug">
 div.my-team
-    .team-1(v-for="(item1,i) in teamList" @click="getData(item1.userId, 1, i, $event)")
+    .team-1(v-for="(item1,i) in teamList" @click="getData(item1.userId, 1, i, $event, item1)")
         p.msg-1
             span.name1(value="item1.userId") {{item1.nikeName}}
             span.grade1 二级
@@ -15,6 +15,8 @@ div.my-team
                     span.name1(value='21') {{item3.nikeName}}
                     span.grade1 四级
                     span.right {{item3.mobile}}
+
+    .none(v-if="teamList.length == 0") 暂无团队
 
 </template>
 
@@ -99,7 +101,8 @@ export default {
         console.log(this.$route.query)
     },
     methods: {
-        async getData(id,lay,i, e){
+        async getData(id,lay,i, e, item){
+            if(!item.isParent) return this.messageTip('暂无下级团队~');
             
             // if($(e.target).parents('.team-1').find('>.msg-1 .name'))
             // console.log(e)
