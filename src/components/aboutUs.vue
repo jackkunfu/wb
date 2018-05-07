@@ -1,8 +1,8 @@
 <template lang="pug">
 div.about-us
-	div(v-html="")  {{article}}
+	div 《快腾通快充平台服务协议》（以下简称“本协议”）由您与快腾通快充共同缔结，本协议具有合同效力。为使用快腾通快充平台的服务，您应当阅读并遵守本协议、请您务必审慎阅读、充分理解各条款内容，特别是免除或者减轻我们责任的条款、管辖与法律适用条款，以及开通或使用某项服务的单独协议。限制、免责条款可能用文字形式提示您注意。除非您已阅读并接受本协议所有条款，否则您无权使用快腾通快充平台提供的服务。您使用快腾通快充的服务即视为您已阅读并同意上述协议的约束。如果您未满18周岁，请在法定监护人的陪同下阅读本协议，并特别注意未成年人使用条款。
 
-    
+	
 
 </template>
 
@@ -25,17 +25,9 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.set-up
+.about-us
 	font-size: 0.4rem;
-	div
-		height: 1.3rem;
-		line-height: 1.3rem;
-		padding: 0 0.5rem;
-		background: #eee;
-		margin-bottom: 0.1rem;
-		img
-			width: 0.2rem;
-			position: relative;
-			top: 0.5rem;
+	padding: 0.5rem;
+	text-align: left;
 </style>
 
