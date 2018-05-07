@@ -1,5 +1,5 @@
 <template lang="pug">
-div 
+div.my-code 
 	img(:src="imgSrc")
     
 </template>
@@ -30,12 +30,17 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
+.my-code
+	width: 100%;
+	height: 100%;
+	background: url(../img/code-bg.jpg) no-repeat;
+	background-size: 100%;
 	img
 		width: 6rem;
 		height: 6rem;
 		position: fixed;
 		left: 50%;
-		top: 50%;
+		top: 57%;
 		transform: translate(-50%,-50%);
 		min-width: 3rem;
 		max-width: 10rem;

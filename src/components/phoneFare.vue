@@ -96,7 +96,7 @@ export default {
 			});
 			if(res && res.status==200) {
 				if(this.payType===1) this.isImg = true;
-				if(this.payType===2) this.messageTip('支付成功~')
+				if(this.payType===2) this.messageTip('支付成功~',true)
 			};
 			
 			
