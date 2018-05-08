@@ -34,6 +34,7 @@ div.order-page
 					span {{item.statName}}
 
 	.none(v-if="orderList.length == 0") 暂无
+	.none(v-if="!isMore") 没有更多了
 
 </template>
 
@@ -44,8 +45,10 @@ export default {
     data () {
 		var token = this.$route.query.token;
 		var type = this.$route.query.type;
+		console.log('type')
+		console.log(type)
         return {
-			type: !!type,     // 1 我的   0  下级的
+			type: type == 1,     // 1 我的   0  下级的
 			token,
 			orderId: true,      // true: 我的订单  false: 下级充值订单
             orderList: [
@@ -83,7 +86,7 @@ export default {
 		this.list();
 		this.$nextTick(()=>{
 			$(document).scroll(()=>{
-				if(this.type && $(document).height()-$(document).scrollTop()-$(window).height == 0){
+				if(this.type && $(document).height()-$(document).scrollTop()-$(window).height() == 0){
 					this.page++;
 					this.list(1);
 				}
@@ -99,7 +102,7 @@ export default {
 			
 			var url = this.type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级订单   1 我的订单
 			var type = this.type ? 'post' : 'get';
-			var options = this.type ? { page: this.page, row: 10 } : {};
+			var options = this.type ? { page: this.page, rows: 10 } : {};
 			var res = await this.ajax(url + this.token, options, type);
 			if(res && res.status == 200){
 				var data = res.data;
