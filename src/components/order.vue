@@ -87,8 +87,8 @@ export default {
 	},
 	methods: {
 		async list(concat){
-			if(!this.isMore) return
-			if(!this.done) return;
+			if(this.type && !this.isMore) return
+			if(this.type && !this.done) return;
 			this.done = false;
 			var url = this.type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级
 			var type = this.type ? 'post' : 'get';
