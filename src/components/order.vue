@@ -45,7 +45,7 @@ export default {
 		var token = this.$route.query.token;
 		var type = this.$route.query.type;
         return {
-			type: !!type,
+			type: !!type,     // 1 我的   0  下级的
 			token,
 			orderId: true,      // true: 我的订单  false: 下级充值订单
             orderList: [
@@ -97,7 +97,7 @@ export default {
 			if(!this.done) return;
 			this.done = false;
 			
-			var url = this.type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级
+			var url = this.type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级订单   1 我的订单
 			var type = this.type ? 'post' : 'get';
 			var options = this.type ? { page: this.page, row: 10 } : {};
 			var res = await this.ajax(url + this.token, options, type);
