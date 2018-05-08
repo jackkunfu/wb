@@ -28,9 +28,6 @@
             .box
                 .label 设置密码
                 input(v-model="zhuce.password" type="password" placeholder="请输入密码")
-            //- .box
-                .label 确认密码
-                input(v-model="zhuce.password1" placeholder="请再次输入密码")
             .box
                 .label 昵称
                 input(v-model="zhuce.nikeName" placeholder="请输入昵称")
