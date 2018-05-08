@@ -40,6 +40,7 @@ export default {
 		var token = this.$route.query.token;
 		var type = this.$route.query.type;
         return {
+			type: !!type,
 			token,
 			orderId: true,      // true: 我的订单  false: 下级充值订单
             orderList: [
@@ -67,24 +68,40 @@ export default {
 				// 	commision: 10,
 				// 	payStatus: true
                 // }
-            ]
+            ],
+			page: 1,    // 当前页
+			done: true,   //  请求是否完成
+			isMore: true
         }
     },
     mounted(){
-		console.log(this.$route.query);
 		this.list();
+		this.$nextTick(()=>{
+			$(document).scroll(()=>{
+				if($(document).height()-$(document).scrollTop()-$(window).height == 0){
+					this.page++;
+					this.list(1);
+				}
+			})
+		})
 	},
 	methods: {
-		async list(){
-			var url = type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级
-			var type = type ? 'post' : 'get';
-			var res = await this.ajax(url + this.token, {}, type);
+		async list(concat){
+			if(!this.isMore) return
+			if(!this.done) return;
+			this.done = false;
+			var url = this.type ? '/api/order/my_order_list/' : '/api/order/child_order/';   // 0下级
+			var type = this.type ? 'post' : 'get';
+			var options = this.type ? { page: this.page, row: 10 } : {};
+			var res = await this.ajax(url + this.token, options, type);
 			if(res && res.status == 200){
-				this.orderList = res.data;
+				if(concat) this.orderList = this.orderList.concat(res.data);
+				else this.orderList = res.data;
 				console.log(this.orderList);
 				console.log(this.orderList.length)
-				
+				if(res.data.length < 10) this.isMore = false;
 			}
+			this.done = true;
 		}
 	}
 }
