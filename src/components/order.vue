@@ -97,11 +97,12 @@ export default {
 			var options = this.type ? { page: this.page, row: 10 } : {};
 			var res = await this.ajax(url + this.token, options, type);
 			if(res && res.status == 200){
-				if(concat) this.orderList = this.orderList.concat(res.data);
-				else this.orderList = res.data;
-				console.log(this.orderList);
-				console.log(this.orderList.length)
-				if(res.data.length < 10) this.isMore = false;
+				var data = res.data;
+				if(concat) this.orderList = this.orderList.concat(data);
+				else this.orderList = data;
+				// console.log(this.orderList);
+				// console.log(this.orderList.length)
+				if(this.type && data.length < 10) this.isMore = false;
 			}
 			this.done = true;
 		}
