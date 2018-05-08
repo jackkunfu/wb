@@ -78,7 +78,7 @@ export default {
 		this.list();
 		this.$nextTick(()=>{
 			$(document).scroll(()=>{
-				if($(document).height()-$(document).scrollTop()-$(window).height == 0){
+				if(this.type && $(document).height()-$(document).scrollTop()-$(window).height == 0){
 					this.page++;
 					this.list(1);
 				}
