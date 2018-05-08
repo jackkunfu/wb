@@ -1,9 +1,11 @@
 // export const apiServer = 'http://198.44.243.39:8088';
 export default function(Vue){
-    Vue.prototype._ajax = function(url, data, type){
+    Vue.prototype._ajax = function(url, data, type, notShowLoding){
         // $('#messageTip').remove();
         if($('#tip').length < 1){
-            $('body').append('<div id="tip">加载中...</div>');
+            if(!notShowLoding){
+                $('body').append('<div id="tip">加载中...</div>');
+            }
         }
         return new Promise(function(rs, rj){
             $.ajax({

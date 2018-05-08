@@ -3,30 +3,35 @@ div.order-page
 	div(v-if="!orderId")
 		.order-list(v-for="(item,i) in orderList")
 			.order-name
-				span.left {{item.name}}
-				span.right {{item.time | timeAll}}
+				span.left {{item.nikeName}}
+				//- span.right {{item.time | timeAll}}
+				span.right {{item.time}}
 			.order-msg
 				p.order-mobile 手机号：
-					span  {{item.mobile}}
+					span  {{item.phone}}
 				p  金额：
-					span {{item.money}}
-				p 佣金：
+					span {{item.price}}
+				//- p 佣金：
 					span {{item.commision}}
 				p 支付状态：
-					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+					//- span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+					span {{item.statName}}
+					
 
 	div(v-if="orderId")
 		.order-list(v-for="(item,i) in orderList")
 			.order-name
-				span.left {{item.name}}
-				span.right {{item.time | timeAll}}
+				span.left {{item.nikeName}}
+				//- span.right {{item.time | timeAll}}
+				span.right {{item.time}}
 			.order-msg
 				p.order-mobile 手机号：
-					span  {{item.mobile}}
+					span  {{item.phone}}
 				p 金额：
-					span {{item.money}}
+					span {{item.price}}
 				p 支付状态：
-					span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+					//- span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+					span {{item.statName}}
 
 	.none(v-if="orderList.length == 0") 暂无
 
@@ -133,6 +138,7 @@ export default {
 			overflow: hidden;
 			border-bottom: 1px solid #F8F8F8;
 		.order-msg
+			text-align: left;
 			p
 				display: inline-block;
 				width: 50%;
