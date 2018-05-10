@@ -24,8 +24,9 @@ div.vip-center
 				img(:src='item.url')
 				span {{item.name}}
 	.cash-box(v-if="isCash")
-		.del-img(@click="isCash=false")
+		
 		.money-input
+			.del-img(@click="isCash=false")
 			.box
 				.label 提现金额
 				input.right(type="number" v-model="money" placeholder="输入提现金额~")
@@ -56,7 +57,7 @@ export default {
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:{ token: token, type: 1 }},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:{ token: token, type: 0 }},
 			   {url: require('../img/record@3x.png'),name:'提现金额',query: '',params:''},
-			   {url: require('../img/set@3x.png'),name:'提现流水',query: '/cashRecd',params:{ token: token }},
+			   {url: require('../img/cash.png'),name:'提现流水',query: '/cashRecd',params:{ token: token , mobile: mobile}},
 			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:{id: id}},
 			],
 			account: {
@@ -108,10 +109,10 @@ export default {
 	top: 0;
 	text-align: center;
 	.del-img
-		width: 1rem;
-		height: 1rem;
+		width: 0.7rem;
+		height: 0.7rem;
 		background: url(../img/delete@2x.png) no-repeat;
-		background-size: 0.7rem;
+		background-size: 0.5rem;
 		position: absolute;
 		right: 0
 		top: 0.3rem;

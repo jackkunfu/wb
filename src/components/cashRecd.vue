@@ -2,17 +2,13 @@
 div.order-page
 	.order-list(v-for="(item,i) in listArr")
 		.order-name
-			span.left {{item.name}}
-			span.right {{item.time | timeAll}}
+			span.left {{mobile}}
+			span.right {{item.created | timeAll}}
 		.order-msg
-			p.order-mobile 手机号：
-				span  {{item.mobile}}
-			p  金额：
-				span {{item.money}}
-			p 佣金：
-				span {{item.commision}}
-			p 支付状态：
-				span(:class="{active: !item.payStatus}")  {{item.payStatus | pay}}
+			p  提现金额：
+				span {{item.price}}
+			p 提现状态：
+				span(:class="{active: item.status==3}")  {{item.statusStr}}
 
 	.none(v-if="listArr.length == 0") 暂无
 
@@ -24,12 +20,20 @@ export default {
 	name: 'cashRecd',
     data () {
 		var token = this.$route.query.token;
+		var mobile = this.$route.query.mobile;
         return {
 			token,
+			mobile,
             listArr: [],
 			page: 1,    // 当前页
 			done: true,   //  请求是否完成
-			isMore: true
+			isMore: true,
+			statusList: {
+				1: '申请',
+				2: '同意',
+				3: '拒绝',
+				4: '完成',
+			}
         }
     },
     mounted(){
@@ -56,6 +60,11 @@ export default {
 				if(data.length < 10) this.isMore = false;
 			}
 			this.done = true;
+			this.listArr.forEach(v=>{
+				if(v.status) v.statusStr = this.statusList[v.status];
+			})
+			console.log('this.listArr')
+			console.log(this.listArr)
 		}
 	}
 }
