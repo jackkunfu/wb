@@ -76,7 +76,7 @@ export default {
 	methods: {
 		// 获取页面信息
 		async getMsg(){
-			var res = await this.ajax('/api/vip/home/'+this.token,{},'get');
+			var res = await this.ajax('/api/vip/home/'+this.token,{},'get', true);
 			if(res && res.status == 200){
 				this.account = res.data;
 			}

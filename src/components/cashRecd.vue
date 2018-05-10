@@ -26,44 +26,36 @@ export default {
 		var token = this.$route.query.token;
         return {
 			token,
-            listArr: [
-                // {
-                //     name:'张三',
-				// 	mobile: '13333333333',
-				// 	time: 1524831951993,
-				// 	money: 100,
-				// 	commision: 10,
-				// 	payStatus: true
-				// },
-				// {
-                //     name:'李四',
-				// 	mobile: '13333333333',
-				// 	time: 1524831951993,
-				// 	money: 100,
-				// 	commision: 10,
-				// 	payStatus: false
-				// },
-				// {
-                //     name:'张三',
-				// 	mobile: '13333333333',
-				// 	time: 1524831951993,
-				// 	money: 100,
-				// 	commision: 10,
-				// 	payStatus: true
-                // }
-            ]
+            listArr: [],
+			page: 1,    // 当前页
+			done: true,   //  请求是否完成
+			isMore: true
         }
     },
     mounted(){
 		this.list();
+		this.$nextTick(()=>{
+			$(document).scroll(()=>{
+				if($(document).height()-$(document).scrollTop()-$(window).height() == 0){
+					this.page++;
+					this.list(1);
+				}
+			})
+		})
 	},
 	methods: {
-		async list(){
-			var url = '/api/withdraw/list/'+this.token;
-			var res = await this.ajax(url, {});
+		async list(concat){
+			if(!this.isMore) return
+			if(!this.done) return;
+			this.done = false;
+			var res = await this.ajax('/api/withdraw/list/'+this.token, { page: this.page, rows: 10 });
 			if(res && res.status == 200){
-				this.listArr = res.data;
+				var data = res.data;
+				if(concat) this.listArr = this.listArr.concat(data);
+				else this.listArr = data;
+				if(data.length < 10) this.isMore = false;
 			}
+			this.done = true;
 		}
 	}
 }
