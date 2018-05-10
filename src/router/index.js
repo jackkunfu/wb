@@ -11,6 +11,7 @@ const setUp = r => require.ensure([], () => r(require('@/components/setUp')), 's
 const aboutUs = r => require.ensure([], () => r(require('@/components/aboutUs')), 'aboutUs');   // 关于我们
 const myTeam = r => require.ensure([], () => r(require('@/components/myTeam')), 'myTeam');   // 我的团队
 const myCode = r => require.ensure([], () => r(require('@/components/myCode')), 'myCode');   // 我的二维码
+const cashRecd = r => require.ensure([], () => r(require('@/components/cashRecd')), 'cashRecd');   // 提现记录
 
 export default new Router({
   routes: [{
@@ -45,5 +46,9 @@ export default new Router({
 		path: '/myCode',
 		name: 'myCode',
 		component: myCode
+	},{
+		path: '/cashRecd',
+		name: 'cashRecd',
+		component: cashRecd
 	}]
 })

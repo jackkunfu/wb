@@ -56,6 +56,7 @@ export default {
 			   {url: require('../img/order@3x.png'),name:'充值订单',query: '/order',params:{ token: token, type: 1 }},
 			   {url: require('../img/order_02@3x.png'),name:'下级充值订单',query: '/order',params:{ token: token, type: 0 }},
 			   {url: require('../img/record@3x.png'),name:'提现金额',query: '',params:''},
+			   {url: require('../img/set@3x.png'),name:'提现流水',query: '/cashRecd',params:{ token: token }},
 			   {url: require('../img/set@3x.png'),name:'设置',query: '/setUp',params:{id: id}},
 			],
 			account: {
