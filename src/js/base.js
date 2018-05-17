@@ -32,7 +32,7 @@ export default function(Vue){
             var res = await this._ajax(...arguments);
             if(res && res.status != 200){
                 if(res.status == 201) this.goUrl('/')
-                else this.messageTip(res.msg || '请求出错，请稍后重试~')
+                else this.messageTip(res.msg || '请求失败，请稍后重试~')
             }
             return res;
         }catch(e){

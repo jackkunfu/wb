@@ -89,12 +89,10 @@ export default {
 		// 提现
 		async getMoney(){
 			var res = await this.ajax('/api/withdraw/'+this.token,{token:this.token,price: this.money*100});
-			if(res && (res.status==200 || res.status==400)) {
-				this.messageTip('成功提现~', true);
+			if(res && res.status==200) {
+				this.messageTip(res.msg, true);
 				this.getMsg();
 				this.isCash=false;
-			}else{
-				this.messageTip('请求失败，请稍后重试~');
 			}
 		},
 	},
